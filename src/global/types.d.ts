@@ -12,3 +12,8 @@ interface Permission {
 interface Permissions {
   permission: Permission[];
 }
+
+interface Role {
+  id?: number;
+  name: string;
+}

@@ -12,6 +12,14 @@ const viewAllRoles = () => {
   });
 };
 
+const findRoleByName = (name: string) => {
+  return db.role.findFirst({
+    where: {
+      name,
+    },
+  });
+};
+
 const showRole = (id: number) => {
   return db.role.findUnique({
     where: {
@@ -26,21 +34,21 @@ const showRole = (id: number) => {
   });
 };
 
-const createRole = (name: string) => {
+const createRole = (role: Role) => {
   return db.role.create({
     data: {
-      name,
+      name: role.name,
     },
   });
 };
 
-const updateRole = (id: number, name: string) => {
+const updateRole = (role: Role) => {
   return db.role.update({
     where: {
-      id,
+      id: role.id,
     },
     data: {
-      name,
+      name: role.name,
     },
   });
 };
@@ -53,4 +61,11 @@ const deleteRole = (id: number) => {
   });
 };
 
-export { viewAllRoles, showRole, createRole, updateRole, deleteRole };
+export {
+  viewAllRoles,
+  showRole,
+  createRole,
+  updateRole,
+  deleteRole,
+  findRoleByName,
+};

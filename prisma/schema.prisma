@@ -142,7 +142,7 @@ model Bill {
   id        String    @id @default(uuid())
   studentId String
   Student   Student   @relation(fields: [studentId], references: [id])
-  paymentMethod PaymentMethod
+  paymentMethod PaymentMethod  @default(Cash)
   payment   BillDetail[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -151,7 +151,7 @@ model Bill {
 model Payment {
   id        String   @id @default(uuid())
   name      String
-  type      PaymentType
+  type      PaymentType @default(Monthly)
   amount    Int
   bill      BillDetail[]
   createdAt DateTime @default(now())
@@ -171,7 +171,7 @@ model BillDetail {
 
 model Role {
   id         Int          @id @default(autoincrement())
-  name       String
+  name       String       @unique
   user       User[]
   permission RolePermission[]
   createdAt  DateTime     @default(now())
@@ -189,8 +189,8 @@ model RolePermission {
 }
 
 model Permission {
-  id   Int    @id @default(autoincrement())
-  name String
+  id   Int        @id @default(autoincrement())
+  name String     @unique
   action String
   menu String
   role RolePermission[]
