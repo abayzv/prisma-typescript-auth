@@ -9,6 +9,9 @@
     "lint": "eslint --fix src",
     "test": "mocha --exit"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
   "author": "Mihai Adrian Andrei",
   "license": "MIT",

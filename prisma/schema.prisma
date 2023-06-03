@@ -11,20 +11,175 @@ datasource db {
 }
 
 model User {
-  id            String         @id @unique @default(uuid())
+  id            String         @id @default(uuid())
   email         String         @unique
   password      String
   refreshTokens RefreshToken[]
+  Student       Student[]
+  Teacher       Teacher[]
+  Staff         Staff[]
+  roleID        Int
+  Role          Role           @relation(fields: [roleID], references: [id])
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  Permission    Permission?    @relation(fields: [permissionId], references: [id])
+  permissionId  Int?
 }
 
 model RefreshToken {
-  id          String   @id @unique @default(uuid())
+  id          String   @id @default(uuid())
   hashedToken String
   userId      String
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   revoked     Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model Staff {
+  id       String    @id @default(uuid())
+  name     String
+  birthDate DateTime
+  address  String
+  phone    String
+  gender   String
+  religion String
+  photo    String
+  userId   String
+  User     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Teacher {
+  id        String    @id @default(uuid())
+  name      String
+  birthDate DateTime
+  address   String
+  phone     String
+  gender    String
+  religion  String
+  photo     String
+  userId    String
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classes   Class[]
+  subject   Subject[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Student {
+  id        String    @id @default(uuid())
+  name      String
+  birthDate DateTime
+  address   String
+  gender    String
+  religion  String
+  photo     String
+  userId    String
+  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  classId   String
+  Class     Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+  score     Score[]
+  bill      Bill[]
+  parentId  String
+  Parent    Parent    @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Parent {
+  id       String    @id @default(uuid())
+  name     String
+  address  String
+  phone    String
+  student  Student[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Class {
+  id        String    @id @default(uuid())
+  name      String
+  teacherId String
+  Teacher   Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  student   Student[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Score {
+  id        String   @id @default(uuid())
+  studentId String
+  Student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  subjectId String
+  Subject   Subject  @relation(fields: [subjectId], references: [id])
+  score     Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Subject {
+  id        String   @id @default(uuid())
+  name      String
+  teacherId String
+  Teacher   Teacher  @relation(fields: [teacherId], references: [id])
+  score     Score[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PaymentType {
+  Registration
+  Monthly
+  Semester
+}
+
+enum PaymentMethod {
+  Cash
+  Transfer
+}
+
+model Bill {
+  id        String    @id @default(uuid())
+  studentId String
+  Student   Student   @relation(fields: [studentId], references: [id])
+  paymentMethod PaymentMethod
+  payment   BillDetail[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Payment {
+  id        String   @id @default(uuid())
+  name      String
+  type      PaymentType
+  amount    Int
+  bill      BillDetail[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model BillDetail {
+  id        String   @id @default(uuid())
+  billId    String
+  Bill      Bill     @relation(fields: [billId], references: [id])
+  paymentId String
+  Payment   Payment  @relation(fields: [paymentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Role {
+  id         Int          @id
+  name       String
+  user       User[]
+  permission Permission[]
+}
+
+model Permission {
+  id   Int    @id
+  name String
+  user User[]
+  role Role[]
 }
