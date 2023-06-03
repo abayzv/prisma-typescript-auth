@@ -1,5 +1,5 @@
 import express from "express";
-import { isAuthenticated } from "../../middlewares";
+import { isAuthenticated, permited } from "../../middlewares";
 import { findUserById } from "./users.services";
 
 const router = express.Router();
@@ -7,6 +7,7 @@ const router = express.Router();
 router.get(
   "/profile",
   isAuthenticated,
+  permited("ADMIN", "STUDENT"),
   async (req: any, res: any, next: any) => {
     try {
       const { userId } = req.payload;

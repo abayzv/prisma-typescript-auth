@@ -1,37 +1,9 @@
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  // Create some roles
-  const admin = await prisma.role.create({
-    data: {
-      id: 1,
-      name: "admin",
-    },
-  });
-
-  const teacher = await prisma.role.create({
-    data: {
-      id: 2,
-      name: "user",
-    },
-  });
-
-  const student = await prisma.role.create({
-    data: {
-      id: 3,
-      name: "student",
-    },
-  });
-
-  const parent = await prisma.role.create({
-    data: {
-      id: 4,
-      name: "parent",
-    },
-  });
-
   // create some permissions
 
   const create = await prisma.permission.create({
@@ -62,11 +34,57 @@ async function main() {
     },
   });
 
+  // Create some roles
+  const admin = await prisma.role.create({
+    data: {
+      id: 1,
+      name: "admin",
+      permission: {
+        connect: [
+          { id: create.id },
+          { id: read.id },
+          { id: update.id },
+          { id: delete_.id },
+        ],
+      },
+    },
+  });
+
+  const teacher = await prisma.role.create({
+    data: {
+      id: 2,
+      name: "teacher",
+      permission: {
+        connect: [{ id: read.id }, { id: update.id }, { id: delete_.id }],
+      },
+    },
+  });
+
+  const student = await prisma.role.create({
+    data: {
+      id: 3,
+      name: "student",
+      permission: {
+        connect: [{ id: read.id }],
+      },
+    },
+  });
+
+  const parent = await prisma.role.create({
+    data: {
+      id: 4,
+      name: "parent",
+      permission: {
+        connect: [{ id: read.id }],
+      },
+    },
+  });
+
   // create user admin
   const adminUser = await prisma.user.create({
     data: {
       email: "admin@admin.com",
-      password: "P@ssw0rd",
+      password: bcrypt.hashSync("P@ssw0rd", 12),
       roleID: admin.id,
     },
   });
@@ -75,7 +93,7 @@ async function main() {
   const teacherUser = await prisma.user.create({
     data: {
       email: "bayu@gmail.com",
-      password: "P@ssw0rd",
+      password: bcrypt.hashSync("P@ssw0rd", 12),
       roleID: teacher.id,
     },
   });
@@ -84,7 +102,7 @@ async function main() {
   const studentUser = await prisma.user.create({
     data: {
       email: "tama@gmail.com",
-      password: "P@ssw0rd",
+      password: bcrypt.hashSync("P@ssw0rd", 12),
       roleID: student.id,
     },
   });

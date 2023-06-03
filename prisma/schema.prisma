@@ -22,8 +22,6 @@ model User {
   Role          Role           @relation(fields: [roleID], references: [id])
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  Permission    Permission?    @relation(fields: [permissionId], references: [id])
-  permissionId  Int?
 }
 
 model RefreshToken {
@@ -180,6 +178,5 @@ model Role {
 model Permission {
   id   Int    @id
   name String
-  user User[]
   role Role[]
 }

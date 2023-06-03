@@ -1,5 +1,26 @@
 import jwt from "jsonwebtoken";
 
+enum Role {
+  ADMIN = 1,
+  TEACHER = 2,
+  STUDENT = 3,
+  PARENT = 4,
+}
+
+function permited(...roles: any) {
+  return (req: any, res: any, next: any) => {
+    const { role } = req.payload;
+    const roleUser = roles.map((role: any) => Role[role]);
+
+    if (!roleUser.includes(role)) {
+      res.status(403);
+      throw new Error(" Forbidden ");
+    }
+
+    return next();
+  };
+}
+
 function notFound(req: any, res: any, next: any) {
   res.status(404);
   const error = new Error(`Url Not Found ${req.originalUrl}`);
@@ -44,4 +65,4 @@ function isAuthenticated(req: any, res: any, next: any) {
   return next();
 }
 
-export { notFound, errorHandler, isAuthenticated };
+export { notFound, errorHandler, isAuthenticated, permited };
