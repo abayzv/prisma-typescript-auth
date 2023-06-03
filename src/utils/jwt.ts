@@ -1,15 +1,10 @@
 import jwt from "jsonwebtoken";
 
-interface User {
-  id: string;
-  roleID: number;
-}
-
 function generateAccessToken(user: User) {
   const data = { userId: user.id, role: user.roleID };
   // @ts-ignore
   return jwt.sign(data, process.env.JWT_ACCESS_SECRET, {
-    expiresIn: "24h",
+    expiresIn: "5m",
   });
 }
 

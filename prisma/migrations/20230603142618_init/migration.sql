@@ -151,45 +151,47 @@ CREATE TABLE "Payment" (
 
 -- CreateTable
 CREATE TABLE "BillDetail" (
-    "id" TEXT NOT NULL,
     "billId" TEXT NOT NULL,
     "paymentId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "BillDetail_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "BillDetail_pkey" PRIMARY KEY ("billId","paymentId")
 );
 
 -- CreateTable
 CREATE TABLE "Role" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Role_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
+CREATE TABLE "RolePermission" (
+    "roleId" INTEGER NOT NULL,
+    "permissionId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "RolePermission_pkey" PRIMARY KEY ("roleId","permissionId")
+);
+
+-- CreateTable
 CREATE TABLE "Permission" (
-    "id" INTEGER NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
+    "action" TEXT NOT NULL,
+    "menu" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Permission_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
-CREATE TABLE "_PermissionToRole" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "_PermissionToRole_AB_unique" ON "_PermissionToRole"("A", "B");
-
--- CreateIndex
-CREATE INDEX "_PermissionToRole_B_index" ON "_PermissionToRole"("B");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_roleID_fkey" FOREIGN KEY ("roleID") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -234,7 +236,7 @@ ALTER TABLE "BillDetail" ADD CONSTRAINT "BillDetail_billId_fkey" FOREIGN KEY ("b
 ALTER TABLE "BillDetail" ADD CONSTRAINT "BillDetail_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "Payment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_PermissionToRole" ADD CONSTRAINT "_PermissionToRole_A_fkey" FOREIGN KEY ("A") REFERENCES "Permission"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_PermissionToRole" ADD CONSTRAINT "_PermissionToRole_B_fkey" FOREIGN KEY ("B") REFERENCES "Role"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

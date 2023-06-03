@@ -2,6 +2,7 @@ import express from "express";
 
 import auth from "./auth/auth.routes";
 import users from "./users/users.routes";
+import role from "./role/role.routes";
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.get("/", (req: any, res: any) => {
 
 router.use("/auth", auth);
 router.use("/users", users);
+router.use("/roles", role);
 
 export default router;

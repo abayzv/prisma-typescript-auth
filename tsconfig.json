@@ -4,6 +4,12 @@
       "outDir": "dist",
       "strict": true,
       "lib": ["esnext"],
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "typeRoots": [
+        "node_modules/@types",
+      ],
+      "types": [
+        "express",
+      ],
     }
   }

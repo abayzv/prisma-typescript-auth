@@ -28,7 +28,7 @@ function createUserByEmailAndPassword(user: {
   });
 }
 
-function findUserById(id: string) {
+function findUserById(id: string): Promise<User | null> {
   return db.user.findUnique({
     where: {
       id,
@@ -36,31 +36,8 @@ function findUserById(id: string) {
     select: {
       id: true,
       email: true,
-      createdAt: true,
       roleID: true,
-      Student: {
-        select: {
-          id: true,
-          name: true,
-          address: true,
-          birthDate: true,
-          religion: true,
-          gender: true,
-          photo: true,
-          bill: {
-            select: {
-              payment: {
-                select: {
-                  Payment: true,
-                },
-              },
-              paymentMethod: true,
-              createdAt: true,
-            },
-          },
-          createdAt: true,
-        },
-      },
+      createdAt: true,
     },
   });
 }

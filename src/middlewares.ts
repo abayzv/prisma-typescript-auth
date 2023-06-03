@@ -1,24 +1,35 @@
 import jwt from "jsonwebtoken";
+import { db } from "./utils/db";
 
-enum Role {
-  ADMIN = 1,
-  TEACHER = 2,
-  STUDENT = 3,
-  PARENT = 4,
-}
+async function isPermited(req: any, res: any, next: any) {
+  const { role } = req.payload;
+  const path = req.originalUrl.split("/")[3];
 
-function permited(...roles: any) {
-  return (req: any, res: any, next: any) => {
-    const { role } = req.payload;
-    const roleUser = roles.map((role: any) => Role[role]);
+  if (role === 99) return next();
 
-    if (!roleUser.includes(role)) {
-      res.status(403);
-      throw new Error(" Forbidden ");
-    }
+  const isPermited = await db.role.findMany({
+    where: {
+      id: role,
+      permission: {
+        some: {
+          permission: {
+            action: req.method,
+            menu: path,
+          },
+        },
+      },
+    },
+  });
 
+  if (!isPermited.length) {
+    res.status(403);
+    const error = new Error("You are not permited to access this route");
+    res.json({
+      message: error.message,
+    });
+  } else {
     return next();
-  };
+  }
 }
 
 function notFound(req: any, res: any, next: any) {
@@ -65,4 +76,4 @@ function isAuthenticated(req: any, res: any, next: any) {
   return next();
 }
 
-export { notFound, errorHandler, isAuthenticated, permited };
+export { notFound, errorHandler, isAuthenticated, isPermited };

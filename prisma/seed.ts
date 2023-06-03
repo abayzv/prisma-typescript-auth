@@ -9,14 +9,18 @@ async function main() {
   const create = await prisma.permission.create({
     data: {
       id: 1,
-      name: "create",
+      name: "Create User",
+      action: "POST",
+      menu: "user",
     },
   });
 
   const read = await prisma.permission.create({
     data: {
       id: 2,
-      name: "read",
+      name: "View User",
+      action: "GET",
+      menu: "user",
     },
   });
 
@@ -24,6 +28,8 @@ async function main() {
     data: {
       id: 3,
       name: "update",
+      action: "PUT",
+      menu: "user",
     },
   });
 
@@ -31,6 +37,8 @@ async function main() {
     data: {
       id: 4,
       name: "delete",
+      action: "DELETE",
+      menu: "user",
     },
   });
 
@@ -39,14 +47,6 @@ async function main() {
     data: {
       id: 1,
       name: "admin",
-      permission: {
-        connect: [
-          { id: create.id },
-          { id: read.id },
-          { id: update.id },
-          { id: delete_.id },
-        ],
-      },
     },
   });
 
@@ -54,9 +54,6 @@ async function main() {
     data: {
       id: 2,
       name: "teacher",
-      permission: {
-        connect: [{ id: read.id }, { id: update.id }, { id: delete_.id }],
-      },
     },
   });
 
@@ -64,9 +61,6 @@ async function main() {
     data: {
       id: 3,
       name: "student",
-      permission: {
-        connect: [{ id: read.id }],
-      },
     },
   });
 
@@ -74,10 +68,56 @@ async function main() {
     data: {
       id: 4,
       name: "parent",
-      permission: {
-        connect: [{ id: read.id }],
-      },
     },
+  });
+
+  // create some role permission
+  const adminPermission = await prisma.rolePermission.createMany({
+    data: [
+      {
+        roleId: admin.id,
+        permissionId: create.id,
+      },
+      {
+        roleId: admin.id,
+        permissionId: read.id,
+      },
+      {
+        roleId: admin.id,
+        permissionId: update.id,
+      },
+      {
+        roleId: admin.id,
+        permissionId: delete_.id,
+      },
+    ],
+  });
+
+  const teacherPermission = await prisma.rolePermission.createMany({
+    data: [
+      {
+        roleId: teacher.id,
+        permissionId: read.id,
+      },
+    ],
+  });
+
+  const studentPermission = await prisma.rolePermission.createMany({
+    data: [
+      {
+        roleId: student.id,
+        permissionId: read.id,
+      },
+    ],
+  });
+
+  const parentPermission = await prisma.rolePermission.createMany({
+    data: [
+      {
+        roleId: parent.id,
+        permissionId: read.id,
+      },
+    ],
   });
 
   // create user admin
