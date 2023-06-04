@@ -47,7 +47,7 @@ router.get(
   async (req: any, res: any, next: any) => {
     try {
       const roles = await viewAllRoles();
-      res.json(roles);
+      res.json({ data: roles });
     } catch (error) {
       next(error);
     }
@@ -68,7 +68,7 @@ router.get(
 
     try {
       const roles = await findRoleById(id);
-      res.json(roles);
+      res.json({ data: roles });
     } catch (error) {
       next(error);
     }
@@ -102,7 +102,7 @@ router.post(
     //  create role
     try {
       const roles = await createRole(roleData);
-      res.json(roles);
+      res.json({ message: "Role successfully created", data: roles });
     } catch (error) {
       next(error);
     }
@@ -137,7 +137,7 @@ router.put(
     // update role
     try {
       const roles = await updateRole(roleData);
-      res.json(roles);
+      res.json({ message: "Role successfully updated", data: roles });
     } catch (error) {
       next(error);
     }
@@ -159,7 +159,7 @@ router.delete(
 
     try {
       const roles = await deleteRole(id);
-      res.json(roles);
+      res.json({ message: "Role successfully deleted" });
     } catch (error) {
       next(error);
     }

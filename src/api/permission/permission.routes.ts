@@ -71,7 +71,7 @@ router.get(
   async (req: any, res: any, next: any) => {
     try {
       const permissions = await viewAllPermissions();
-      res.json(permissions);
+      res.json({ data: permissions });
     } catch (error) {
       next(error);
     }

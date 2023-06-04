@@ -27,7 +27,7 @@ async function main() {
   const update = await prisma.permission.create({
     data: {
       id: 3,
-      name: "update",
+      name: "Update User",
       action: "PUT",
       menu: "user",
     },
@@ -36,37 +36,44 @@ async function main() {
   const delete_ = await prisma.permission.create({
     data: {
       id: 4,
-      name: "delete",
+      name: "Delete User",
       action: "DELETE",
       menu: "user",
     },
   });
 
   // Create some roles
-  const admin = await prisma.role.create({
+  const superadmin = await prisma.role.create({
     data: {
       id: 1,
+      name: "superadmin",
+    },
+  });
+
+  const admin = await prisma.role.create({
+    data: {
+      id: 2,
       name: "admin",
     },
   });
 
   const teacher = await prisma.role.create({
     data: {
-      id: 2,
+      id: 3,
       name: "teacher",
     },
   });
 
   const student = await prisma.role.create({
     data: {
-      id: 3,
+      id: 4,
       name: "student",
     },
   });
 
   const parent = await prisma.role.create({
     data: {
-      id: 4,
+      id: 5,
       name: "parent",
     },
   });
@@ -147,39 +154,11 @@ async function main() {
     },
   });
 
-  // create staff admin
-  const staff1 = await prisma.staff.create({
-    data: {
-      name: "Rudi Hartono",
-      birthDate: new Date("1990-01-01"),
-      address: "Jl. Sukaraja No. 1",
-      phone: "081234567890",
-      gender: "Laki-laki",
-      religion: "Islam",
-      photo: "",
-      userId: adminUser.id,
-    },
-  });
-
-  // create teacher
-  const teacher1 = await prisma.teacher.create({
-    data: {
-      name: "Bayu Aji",
-      birthDate: new Date("1990-01-01"),
-      address: "Jl. Sukaraja No. 1",
-      phone: "081234567890",
-      gender: "Laki-laki",
-      religion: "Islam",
-      photo: "",
-      userId: teacherUser.id,
-    },
-  });
-
   // create class
   const class1 = await prisma.class.create({
     data: {
       name: "XII RPL 1",
-      teacherId: teacher1.id,
+      teacherId: teacherUser.id,
     },
   });
 
@@ -198,21 +177,7 @@ async function main() {
       name: "Tono",
       address: "Jl. Sukaraja No. 1",
       phone: "081234567890",
-    },
-  });
-
-  // create student
-  const student1 = await prisma.student.create({
-    data: {
-      name: "Tama",
-      birthDate: new Date("1990-01-01"),
-      address: "Jl. Sukaraja No. 1",
-      gender: "Perempuan",
-      religion: "Islam",
-      photo: "",
       userId: studentUser.id,
-      parentId: parent1.id,
-      classId: class1.id,
     },
   });
 
@@ -220,23 +185,23 @@ async function main() {
   const subject1 = await prisma.subject.create({
     data: {
       name: "Bahasa Indonesia",
-      teacherId: teacher1.id,
+      teacherId: teacherUser.id,
     },
   });
 
   // create score
   const score1 = await prisma.score.create({
     data: {
-      studentId: student1.id,
-      subjectId: subject1.id,
       score: 90,
+      subjectId: subject1.id,
+      userId: studentUser.id,
     },
   });
 
   // create bill
   const bill1 = await prisma.bill.create({
     data: {
-      studentId: student1.id,
+      userId: studentUser.id,
       paymentMethod: "Cash",
     },
   });

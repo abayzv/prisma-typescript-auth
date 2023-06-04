@@ -8,6 +8,8 @@ const viewAllPermissions = () => {
       name: true,
       action: true,
       menu: true,
+      createdAt: true,
+      updatedAt: true,
     },
   });
 };

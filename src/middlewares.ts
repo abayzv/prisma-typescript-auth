@@ -5,7 +5,7 @@ async function isPermited(req: any, res: any, next: any) {
   const { role } = req.payload;
   const path = req.originalUrl.split("/")[3];
 
-  if (role === 99) return next();
+  if (role === 1) return next();
 
   const isPermited = await db.role.findMany({
     where: {
