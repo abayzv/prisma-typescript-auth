@@ -25,6 +25,20 @@ const findRoleById = (id: number) => {
     where: {
       id,
     },
+    select: {
+      name: true,
+      permissions: {
+        select: {
+          permission: {
+            select: {
+              name: true,
+              action: true,
+              menu: true,
+            },
+          },
+        },
+      },
+    },
   });
 };
 

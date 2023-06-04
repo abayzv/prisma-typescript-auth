@@ -54,6 +54,27 @@ router.get(
   }
 );
 
+// View Role Detail
+router.get(
+  "/:id",
+  isAuthenticated,
+  isPermited,
+  async (req: any, res: any, next: any) => {
+    const id = +req.params.id;
+
+    // check if role exist
+    const role = await findRoleById(id);
+    if (!role) return res.status(400).json({ message: "Role not found" });
+
+    try {
+      const roles = await findRoleById(id);
+      res.json(roles);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // Create Role
 router.post(
   "/",

@@ -6,8 +6,8 @@ const viewAllPermissions = () => {
     select: {
       id: true,
       name: true,
-      createdAt: true,
-      updatedAt: true,
+      action: true,
+      menu: true,
     },
   });
 };
