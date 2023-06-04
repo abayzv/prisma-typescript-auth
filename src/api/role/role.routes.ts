@@ -7,10 +7,14 @@ import {
   updateRole,
   deleteRole,
   findRoleByName,
+  findRoleById,
+  assignRolePermission,
+  deleteRolePermission,
 } from "./role.services";
 
 const router = express.Router();
 
+// Validation Rules
 const rules = {
   name: {
     notEmpty: {
@@ -23,6 +27,19 @@ const rules = {
   },
 };
 
+// Assign Role Permission Rules
+const rolePermissionRules = {
+  permissions: {
+    isArray: {
+      errorMessage: "Permission must be an array",
+    },
+    notEmpty: {
+      errorMessage: "Permission is required",
+    },
+  },
+};
+
+// Vie All Roles
 router.get(
   "/",
   isAuthenticated,
@@ -37,6 +54,7 @@ router.get(
   }
 );
 
+// Create Role
 router.post(
   "/",
   isAuthenticated,
@@ -60,7 +78,7 @@ router.post(
     const isExist = await findRoleByName(name);
     if (isExist) return res.status(400).json({ message: "Role already exist" });
 
-    //  create role if not exist
+    //  create role
     try {
       const roles = await createRole(roleData);
       res.json(roles);
@@ -70,6 +88,7 @@ router.post(
   }
 );
 
+// Update Role
 router.put(
   "/:id",
   isAuthenticated,
@@ -79,21 +98,130 @@ router.put(
     const errors = validationResult(req);
     const id = +req.params.id;
 
-    if (errors.isEmpty()) {
-      const { name } = matchedData(req);
-      const roleData: Role = {
-        id,
-        name,
-      };
+    // if not valid return error
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
 
-      try {
-        const roles = await updateRole(roleData);
-        res.json(roles);
-      } catch (error) {
-        next(error);
-      }
-    } else {
-      res.status(400).json({ errors: errors.array() });
+    // if valid get data
+    const { name } = matchedData(req);
+    const roleData: Role = {
+      id,
+      name,
+    };
+
+    //   check if role already exist
+    const isExist = await findRoleByName(name);
+    if (isExist) return res.status(400).json({ message: "Role already exist" });
+
+    // update role
+    try {
+      const roles = await updateRole(roleData);
+      res.json(roles);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// Delete Role
+router.delete(
+  "/:id",
+  isAuthenticated,
+  isPermited,
+  async (req: any, res: any, next: any) => {
+    const id = +req.params.id;
+
+    // check if role exist
+    const role = await findRoleById(id);
+
+    if (!role) return res.status(400).json({ message: "Role not found" });
+
+    try {
+      const roles = await deleteRole(id);
+      res.json(roles);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// Assign Role Permission
+router.post(
+  "/assign/:id",
+  isAuthenticated,
+  isPermited,
+  checkSchema(rolePermissionRules),
+  async (req: any, res: any, next: any) => {
+    const id = +req.params.id;
+
+    // init validation
+    const errors = validationResult(req);
+
+    // if not valid return error
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+
+    // check if role exist
+    const role = await findRoleById(id);
+    if (!role) return res.status(400).json({ message: "Role not found" });
+
+    // get permission
+    const permissions: Array<number> = matchedData(req).permissions;
+
+    // map role id to permission
+    const mappedPermission: RolePermission[] = permissions.map((permission) => {
+      return {
+        roleId: id,
+        permissionId: permission,
+      };
+    });
+
+    // assign permission
+    try {
+      await assignRolePermission(mappedPermission);
+      res.json({ message: "Permission successfully assigned" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// Unassign Role Permission
+router.delete(
+  "/unassign/:id",
+  isAuthenticated,
+  isPermited,
+  checkSchema(rolePermissionRules),
+  async (req: any, res: any, next: any) => {
+    const id = +req.params.id;
+
+    // init validation
+    const errors = validationResult(req);
+
+    // if not valid return error
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+
+    // get data
+    const permissions: Array<number> = matchedData(req).permissions;
+
+    // map role id to permission
+    const rolePermission: RolePermission[] = permissions.map((permission) => {
+      return {
+        roleId: id,
+        permissionId: permission,
+      };
+    });
+
+    const role = await findRoleById(id);
+    if (!role) return res.status(400).json({ message: "Role not found" });
+
+    // unassign permission
+    try {
+      const roles = await deleteRolePermission(rolePermission);
+      res.json({ message: "Permission successfully unassigned" });
+    } catch (error) {
+      next(error);
     }
   }
 );

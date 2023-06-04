@@ -15,11 +15,11 @@ model User {
   email         String         @unique
   password      String
   refreshTokens RefreshToken[]
-  Student       Student[]
-  Teacher       Teacher[]
-  Staff         Staff[]
+  student       Student[]
+  teacher       Teacher[]
+  staff         Staff[]
   roleID        Int
-  Role          Role           @relation(fields: [roleID], references: [id])
+  role          Role           @relation(fields: [roleID], references: [id])
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
@@ -28,7 +28,7 @@ model RefreshToken {
   id          String   @id @default(uuid())
   hashedToken String
   userId      String
-  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   revoked     Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -59,7 +59,7 @@ model Teacher {
   religion  String
   photo     String
   userId    String
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   classes   Class[]
   subject   Subject[]
   createdAt DateTime  @default(now())
@@ -75,13 +75,13 @@ model Student {
   religion  String
   photo     String
   userId    String
-  User      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   classId   String
-  Class     Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
+  slass     Class     @relation(fields: [classId], references: [id], onDelete: Cascade)
   score     Score[]
   bill      Bill[]
   parentId  String
-  Parent    Parent    @relation(fields: [parentId], references: [id], onDelete: Cascade)
+  parent    Parent    @relation(fields: [parentId], references: [id], onDelete: Cascade)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -100,7 +100,7 @@ model Class {
   id        String    @id @default(uuid())
   name      String
   teacherId String
-  Teacher   Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacher   Teacher   @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   student   Student[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -109,9 +109,9 @@ model Class {
 model Score {
   id        String   @id @default(uuid())
   studentId String
-  Student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
   subjectId String
-  Subject   Subject  @relation(fields: [subjectId], references: [id])
+  subject   Subject  @relation(fields: [subjectId], references: [id])
   score     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -121,7 +121,7 @@ model Subject {
   id        String   @id @default(uuid())
   name      String
   teacherId String
-  Teacher   Teacher  @relation(fields: [teacherId], references: [id])
+  teacher   Teacher  @relation(fields: [teacherId], references: [id])
   score     Score[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -141,7 +141,7 @@ enum PaymentMethod {
 model Bill {
   id        String    @id @default(uuid())
   studentId String
-  Student   Student   @relation(fields: [studentId], references: [id])
+  student   Student   @relation(fields: [studentId], references: [id])
   paymentMethod PaymentMethod  @default(Cash)
   payment   BillDetail[]
   createdAt DateTime  @default(now())
@@ -160,9 +160,9 @@ model Payment {
 
 model BillDetail {
   billId    String
-  Bill      Bill     @relation(fields: [billId], references: [id])
+  bill      Bill     @relation(fields: [billId], references: [id])
   paymentId String
-  Payment   Payment  @relation(fields: [paymentId], references: [id])
+  payment   Payment  @relation(fields: [paymentId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -180,9 +180,9 @@ model Role {
 
 model RolePermission {
   roleId     Int
-  role      Role         @relation(fields: [roleId], references: [id])
+  role      Role          @relation(fields: [roleId], references: [id], onDelete: Cascade)
   permissionId Int
-  permission Permission  @relation(fields: [permissionId], references: [id])
+  permission Permission   @relation(fields: [permissionId], references: [id], onDelete: Cascade)
   createdAt  DateTime     @default(now())
 
   @@id([roleId, permissionId])

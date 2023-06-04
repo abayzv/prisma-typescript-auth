@@ -12,10 +12,36 @@ const viewAllRoles = () => {
   });
 };
 
+const assignRolePermission = (
+  rolePermission: Prisma.RolePermissionCreateManyInput[]
+) => {
+  return db.rolePermission.createMany({
+    data: rolePermission,
+  });
+};
+
+const deleteRolePermission = (
+  rolePermission: Prisma.RolePermissionCreateManyInput[]
+) => {
+  return db.rolePermission.deleteMany({
+    where: {
+      OR: rolePermission,
+    },
+  });
+};
+
 const findRoleByName = (name: string) => {
   return db.role.findFirst({
     where: {
       name,
+    },
+  });
+};
+
+const findRoleById = (id: number) => {
+  return db.role.findUnique({
+    where: {
+      id,
     },
   });
 };
@@ -68,4 +94,7 @@ export {
   updateRole,
   deleteRole,
   findRoleByName,
+  findRoleById,
+  assignRolePermission,
+  deleteRolePermission,
 };

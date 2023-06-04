@@ -17,3 +17,9 @@ interface Role {
   id?: number;
   name: string;
 }
+
+interface RolePermission {
+  roleId: number;
+  permissionId: number;
+  createdAt?: Date | string;
+}
