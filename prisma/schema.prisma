@@ -22,7 +22,8 @@ model User {
   classId       String?
   class         Class?         @relation(fields: [classId], references: [id])
   teacherClass  Class?         @relation(name: "TeacherClass")
-  subject       Subject[]
+  subjectId     String?        @unique
+  subject       Subject?       @relation(fields: [subjectId], references: [id])
   bill          Bill[]
   score         Score[]
   createdAt     DateTime       @default(now())
@@ -42,10 +43,10 @@ model RefreshToken {
 model Profile {
   id        String    @id @default(uuid())
   name      String
-  birthDate DateTime
-  address   String
-  gender    String
-  religion  String
+  birthDate DateTime?
+  address   String?
+  gender    String?
+  religion  String?
   photo     String?
   userId    String    @unique
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -75,7 +76,6 @@ model Class {
 }
 
 model Score {
-  id        String   @id @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   subjectId String
@@ -83,13 +83,14 @@ model Score {
   score     Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@id([userId, subjectId])
 }
 
 model Subject {
   id        String   @id @default(uuid())
   name      String
-  teacherId String
-  teacher   User  @relation(fields: [teacherId], references: [id])
+  user      User[]
   score     Score[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

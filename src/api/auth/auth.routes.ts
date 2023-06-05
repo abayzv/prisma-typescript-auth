@@ -36,7 +36,7 @@ router.post("/register", async (req: any, res: any, next: any) => {
     const user = await createUserByEmailAndPassword({
       email,
       password,
-      roleID: 2,
+      roleID: 4,
     });
     const jti = uuidv4();
     const { accessToken, refreshToken } = generateTokens(user, jti);

@@ -127,12 +127,31 @@ async function main() {
     ],
   });
 
+  // create user superadmin
+  const superadminUser = await prisma.user.create({
+    data: {
+      email: "super@admin.com",
+      password: bcrypt.hashSync("P@ssw0rd", 12),
+      roleID: superadmin.id,
+      profile: {
+        create: {
+          name: "Super Admin",
+        },
+      },
+    },
+  });
+
   // create user admin
   const adminUser = await prisma.user.create({
     data: {
       email: "admin@admin.com",
       password: bcrypt.hashSync("P@ssw0rd", 12),
       roleID: admin.id,
+      profile: {
+        create: {
+          name: "Admin",
+        },
+      },
     },
   });
 
@@ -142,6 +161,11 @@ async function main() {
       email: "bayu@gmail.com",
       password: bcrypt.hashSync("P@ssw0rd", 12),
       roleID: teacher.id,
+      profile: {
+        create: {
+          name: "Aji Bayu Nugroho",
+        },
+      },
     },
   });
 
@@ -151,6 +175,11 @@ async function main() {
       email: "tama@gmail.com",
       password: bcrypt.hashSync("P@ssw0rd", 12),
       roleID: student.id,
+      profile: {
+        create: {
+          name: "Pertamawati",
+        },
+      },
     },
   });
 
@@ -185,7 +214,6 @@ async function main() {
   const subject1 = await prisma.subject.create({
     data: {
       name: "Bahasa Indonesia",
-      teacherId: teacherUser.id,
     },
   });
 

@@ -3,7 +3,7 @@ import { db } from "./utils/db";
 
 async function isPermited(req: any, res: any, next: any) {
   const { role } = req.payload;
-  const path = req.originalUrl.split("/")[3];
+  const path = req.originalUrl.split("/").slice(3, 5).join("/");
 
   if (role === 1) return next();
 
@@ -14,7 +14,10 @@ async function isPermited(req: any, res: any, next: any) {
         some: {
           permission: {
             action: req.method,
-            menu: path,
+            menu: {
+              contains: path,
+              mode: "insensitive",
+            },
           },
         },
       },

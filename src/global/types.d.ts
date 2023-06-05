@@ -23,3 +23,11 @@ interface RolePermission {
   permissionId: number;
   createdAt?: Date | string;
 }
+
+declare enum UserRoles {
+  superadmin = 1,
+  admin = 2,
+  teacher = 3,
+  student = 4,
+  parent = 5,
+}
