@@ -155,12 +155,22 @@ function viewUserDetails(id: string) {
 function createUserByEmailAndPassword(user: {
   email: string;
   password: string;
+  name: string;
   roleID: UserRoles;
 }) {
   user.password = bcrypt.hashSync(user.password, 12);
 
   return db.user.create({
-    data: user,
+    data: {
+      email: user.email,
+      password: user.password,
+      roleID: user.roleID,
+      profile: {
+        create: {
+          name: user.name,
+        },
+      },
+    },
   });
 }
 
@@ -197,6 +207,62 @@ function changeUserRole(id: string, roleID: UserRoles) {
   });
 }
 
+function updateUser(
+  id: string,
+  data: {
+    email?: string;
+    password?: string;
+    name?: string;
+    birthDate?: Date;
+    address?: string;
+    gender?: string;
+    religion?: string;
+    photo?: string;
+  }
+) {
+  return db.user.update({
+    where: {
+      id,
+    },
+    data: {
+      email: data.email,
+      password: data.password,
+      profile: {
+        update: {
+          name: data.name,
+          birthDate: data.birthDate,
+          address: data.address,
+          gender: data.gender,
+          religion: data.religion,
+          photo: data.photo,
+        },
+      },
+    },
+    select: {
+      id: true,
+      email: true,
+      profile: {
+        select: {
+          name: true,
+          birthDate: true,
+          address: true,
+          gender: true,
+          religion: true,
+          photo: true,
+        },
+      },
+    },
+  });
+}
+
+function deleteUser(id: string) {
+  return db.user.delete({
+    where: {
+      id,
+    },
+  });
+}
+
 export {
   findUserByEmail,
   findUserById,
@@ -204,4 +270,6 @@ export {
   viewAllUsers,
   viewUserDetails,
   changeUserRole,
+  updateUser,
+  deleteUser,
 };

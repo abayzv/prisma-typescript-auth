@@ -20,10 +20,10 @@ const router = express.Router();
 
 router.post("/register", async (req: any, res: any, next: any) => {
   try {
-    const { email, password } = req.body;
-    if (!email || !password) {
+    const { email, password, name, roleId } = req.body;
+    if (!email || !password || !name) {
       res.status(400);
-      throw new Error("You must provide an email and a password.");
+      throw new Error("You must provide an email, a password and a name.");
     }
 
     const existingUser = await findUserByEmail(email);
@@ -36,7 +36,8 @@ router.post("/register", async (req: any, res: any, next: any) => {
     const user = await createUserByEmailAndPassword({
       email,
       password,
-      roleID: 4,
+      name,
+      roleID: roleId ? roleId : 4,
     });
     const jti = uuidv4();
     const { accessToken, refreshToken } = generateTokens(user, jti);
