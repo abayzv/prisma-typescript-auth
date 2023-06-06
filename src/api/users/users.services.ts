@@ -25,8 +25,8 @@ async function viewAllUsers(query: {
           contains: query.name || "",
           mode: "insensitive",
         },
-        religion: null || query.religion,
-        gender: null || query.gender,
+        // religion: null || query.religion,
+        // gender: null || query.gender,
       },
     },
     select: {
@@ -40,10 +40,6 @@ async function viewAllUsers(query: {
       profile: {
         select: {
           name: true,
-          birthDate: true,
-          address: true,
-          gender: true,
-          religion: true,
           photo: true,
         },
       },
@@ -65,8 +61,8 @@ async function viewAllUsers(query: {
           contains: query.name || "",
           mode: "insensitive",
         },
-        religion: null || query.religion,
-        gender: null || query.gender,
+        // religion: null || query.religion,
+        // gender: null || query.gender,
       },
     },
   });

@@ -1,8 +1,14 @@
 import { db } from "../../utils/db";
 import { Prisma } from "@prisma/client";
 
-const viewAllRoles = () => {
+const viewAllRoles = (query: { name?: string }) => {
   return db.role.findMany({
+    where: {
+      name: {
+        contains: query.name || "",
+        mode: "insensitive",
+      },
+    },
     select: {
       id: true,
       name: true,

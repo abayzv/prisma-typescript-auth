@@ -46,7 +46,7 @@ router.get(
   isPermited,
   async (req: any, res: any, next: any) => {
     try {
-      const roles = await viewAllRoles();
+      const roles = await viewAllRoles(req.query);
       res.json({ data: roles });
     } catch (error) {
       next(error);

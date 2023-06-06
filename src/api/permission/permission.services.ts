@@ -1,13 +1,19 @@
 import { db } from "../../utils/db";
 import { Prisma } from "@prisma/client";
 
-const viewAllPermissions = () => {
+const viewAllPermissions = (query: { name?: string }) => {
   return db.permission.findMany({
+    where: {
+      name: {
+        contains: query.name || "",
+        mode: "insensitive",
+      },
+    },
     select: {
       id: true,
       name: true,
-      action: true,
-      menu: true,
+      // action: true,
+      // menu: true,
       createdAt: true,
       updatedAt: true,
     },

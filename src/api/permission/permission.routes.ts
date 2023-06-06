@@ -70,7 +70,7 @@ router.get(
   isPermited,
   async (req: any, res: any, next: any) => {
     try {
-      const permissions = await viewAllPermissions();
+      const permissions = await viewAllPermissions(req.query);
       res.json({ data: permissions });
     } catch (error) {
       next(error);
