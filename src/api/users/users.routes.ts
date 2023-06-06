@@ -295,7 +295,7 @@ router.delete(
       if (!user) return res.status(400).json({ message: "User not found" });
 
       const userDeleted = await deleteUser(id);
-      res.json({ message: "User Deleted Succesfully", data: userDeleted });
+      res.json({ message: "User Deleted Succesfully" });
     } catch (error) {
       next(error);
     }
