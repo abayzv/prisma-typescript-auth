@@ -135,8 +135,19 @@ router.get(
   async (req: any, res: any, next: any) => {
     try {
       const { orderId } = req.params;
+      // get url path
+
       const result = await getStatus(orderId);
-      res.json({ data: result });
+
+      const url =
+        req.protocol +
+        "://" +
+        req.get("host") +
+        "/api/v1/transactions/" +
+        result.transaction_id +
+        "/qrcode";
+
+      res.json({ data: { ...result, qrCode: url } });
     } catch (error) {
       next(error);
     }
@@ -180,7 +191,7 @@ router.get("/:orderId/qrcode", async (req: any, res: any, next: any) => {
     const { orderId } = req.params;
     const result = await getQrCode(orderId);
 
-    const img = await base64img.imgSync(result, "", "qrcode");
+    const img = await base64img.imgSync(result, "src/assets/images", orderId);
 
     if (!img) return res.status(404).json({ message: "Image not found" });
 
