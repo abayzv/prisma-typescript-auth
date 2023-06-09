@@ -27,6 +27,10 @@ const rules = {
     notEmpty: {
       errorMessage: "Action is required",
     },
+    isIn: {
+      options: [["GET", "POST", "PUT", "DELETE"]],
+      errorMessage: "Action must be GET, POST, PUT or DELETE",
+    },
   },
   menu: {
     notEmpty: {
@@ -52,6 +56,10 @@ const editRules = {
     isLength: {
       options: { min: 3 },
       errorMessage: "Name must be at least 3 characters long",
+    },
+    isIn: {
+      options: [["GET", "POST", "PUT", "DELETE"]],
+      errorMessage: "Action must be GET, POST, PUT or DELETE",
     },
   },
   menu: {

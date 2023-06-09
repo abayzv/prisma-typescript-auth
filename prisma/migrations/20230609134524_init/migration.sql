@@ -1,8 +1,5 @@
 -- CreateEnum
-CREATE TYPE "PaymentType" AS ENUM ('Registration', 'Monthly', 'Semester');
-
--- CreateEnum
-CREATE TYPE "PaymentMethod" AS ENUM ('Cash', 'Transfer');
+CREATE TYPE "PaymentType" AS ENUM ('registration', 'monthly', 'semester');
 
 -- CreateEnum
 CREATE TYPE "PermissionAction" AS ENUM ('GET', 'POST', 'PUT', 'DELETE');
@@ -95,21 +92,33 @@ CREATE TABLE "Subject" (
 );
 
 -- CreateTable
-CREATE TABLE "Bill" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "paymentMethod" "PaymentMethod" NOT NULL DEFAULT 'Cash',
+CREATE TABLE "PaymentMethod" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Bill_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "PaymentMethod_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Transaction" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "paymentMethodId" INTEGER NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'pending',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Transaction_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Payment" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "type" "PaymentType" NOT NULL DEFAULT 'Monthly',
+    "type" "PaymentType" NOT NULL DEFAULT 'monthly',
     "amount" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -118,13 +127,14 @@ CREATE TABLE "Payment" (
 );
 
 -- CreateTable
-CREATE TABLE "BillDetail" (
-    "billId" TEXT NOT NULL,
+CREATE TABLE "TransactionDetail" (
+    "transactionId" TEXT NOT NULL,
     "paymentId" TEXT NOT NULL,
+    "notes" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "BillDetail_pkey" PRIMARY KEY ("billId","paymentId")
+    CONSTRAINT "TransactionDetail_pkey" PRIMARY KEY ("transactionId","paymentId")
 );
 
 -- CreateTable
@@ -207,13 +217,16 @@ ALTER TABLE "Score" ADD CONSTRAINT "Score_userId_fkey" FOREIGN KEY ("userId") RE
 ALTER TABLE "Score" ADD CONSTRAINT "Score_subjectId_fkey" FOREIGN KEY ("subjectId") REFERENCES "Subject"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Bill" ADD CONSTRAINT "Bill_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BillDetail" ADD CONSTRAINT "BillDetail_billId_fkey" FOREIGN KEY ("billId") REFERENCES "Bill"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Transaction" ADD CONSTRAINT "Transaction_paymentMethodId_fkey" FOREIGN KEY ("paymentMethodId") REFERENCES "PaymentMethod"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BillDetail" ADD CONSTRAINT "BillDetail_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "Payment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "TransactionDetail" ADD CONSTRAINT "TransactionDetail_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "Transaction"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "TransactionDetail" ADD CONSTRAINT "TransactionDetail_paymentId_fkey" FOREIGN KEY ("paymentId") REFERENCES "Payment"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE CASCADE ON UPDATE CASCADE;

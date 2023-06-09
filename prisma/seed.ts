@@ -195,7 +195,7 @@ async function main() {
   const spp = await prisma.payment.create({
     data: {
       name: "SPP",
-      type: "Semester",
+      type: "semester",
       amount: 1000000,
     },
   });
@@ -226,18 +226,27 @@ async function main() {
     },
   });
 
-  // create bill
-  const bill1 = await prisma.bill.create({
+  // create payment method
+  const qris = await prisma.paymentMethod.create({
     data: {
-      userId: studentUser.id,
-      paymentMethod: "Cash",
+      name: "qris",
+      image:
+        "https://seeklogo.com/images/Q/quick-response-code-indonesia-standard-qris-logo-F300D5EB32-seeklogo.com.png",
     },
   });
 
-  // create bill detail
-  const billDetail1 = await prisma.billDetail.create({
+  // create transaction
+  const transaction1 = await prisma.transaction.create({
     data: {
-      billId: bill1.id,
+      userId: studentUser.id,
+      paymentMethodId: qris.id,
+    },
+  });
+
+  // create transaction detail
+  const transactionDetail1 = await prisma.transactionDetail.create({
+    data: {
+      transactionId: transaction1.id,
       paymentId: spp.id,
     },
   });

@@ -239,21 +239,21 @@ router.get(
       if (!user) return res.status(400).json({ message: "User not found" });
 
       const userResponse: any = {};
-      const userBill: any = [];
+      const userTransaction: any = [];
 
-      // get user bill
-      user.bill.forEach((bill: any) => {
+      // get user transaction
+      user.transaction.forEach((transaction: any) => {
         let amount = 0;
-        bill.payment.forEach((payment: any) => {
+        transaction.payment.forEach((payment: any) => {
           amount += payment.payment.amount;
         });
 
-        userBill.push({
-          id: bill.id,
+        userTransaction.push({
+          id: transaction.id,
           ammount: amount,
-          payment: bill.payment,
-          createdAt: bill.createdAt,
-          updatedAt: bill.updatedAt,
+          payment: transaction.payment,
+          createdAt: transaction.createdAt,
+          updatedAt: transaction.updatedAt,
         });
       });
 
@@ -290,7 +290,7 @@ router.get(
           userResponse["parent"] = user.parent;
           userResponse["class"] = user.class;
           userResponse["score"] = user.score;
-          userResponse["bill"] = userBill;
+          userResponse["transaction"] = userTransaction;
           userResponse["createdAt"] = user.createdAt;
           userResponse["updatedAt"] = user.updatedAt;
       }

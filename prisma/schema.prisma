@@ -24,7 +24,7 @@ model User {
   teacherClass  Class?         @relation(name: "TeacherClass")
   subjectId     String?        @unique
   subject       Subject?       @relation(fields: [subjectId], references: [id])
-  bill          Bill[]
+  transaction   Transaction[]
   score         Score[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -97,22 +97,28 @@ model Subject {
 }
 
 enum PaymentType {
-  Registration
-  Monthly
-  Semester
+  registration
+  monthly
+  semester
 }
 
-enum PaymentMethod {
-  Cash
-  Transfer
+model PaymentMethod {
+  id        Int       @id @default(autoincrement())
+  name      String
+  image     String
+  transaction Transaction[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Bill {
+model Transaction {
   id        String    @id @default(uuid())
   userId    String
   user      User      @relation(fields: [userId], references: [id])
-  paymentMethod PaymentMethod  @default(Cash)
-  payment   BillDetail[]
+  payment   TransactionDetail[]
+  paymentMethodId Int 
+  paymentMethod PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  status    String    @default("pending")
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -120,22 +126,23 @@ model Bill {
 model Payment {
   id        String   @id @default(uuid())
   name      String
-  type      PaymentType @default(Monthly)
+  type      PaymentType @default(monthly)
   amount    Int
-  bill      BillDetail[]
+  transaction      TransactionDetail[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model BillDetail {
-  billId    String
-  bill      Bill     @relation(fields: [billId], references: [id])
+model TransactionDetail {
+  transactionId    String
+  transaction      Transaction     @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   paymentId String
   payment   Payment  @relation(fields: [paymentId], references: [id])
+  notes     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@id([billId, paymentId])
+  @@id([transactionId, paymentId])
 }
 
 model Role {

@@ -3,7 +3,6 @@ import core from "../../config/midtrans.js";
 import axios from "axios";
 import fetch from "node-fetch";
 import { db } from "../../utils/db";
-import { PaymentMethod } from "@prisma/client";
 
 const charge = async (paymentData: {
   payment_type: string;
@@ -63,17 +62,18 @@ const cancelTransaction = async (orderId: string) => {
 };
 
 const addTransaction = async (transactionData: {
-  payment: Array<string>;
+  payment: Array<PaymentDetailItem>;
   userId: string;
-  payment_type: string;
-  payment_method: PaymentMethod;
+  paymentMethodId: number;
 }) => {
-  const { payment, userId, payment_type, payment_method } = transactionData;
+  const { payment, userId, paymentMethodId } = transactionData;
   // get all payment
+  const paymentsId = payment.map((item) => item.id);
+
   const paymentData = await db.payment.findMany({
     where: {
       id: {
-        in: payment,
+        in: paymentsId,
       },
     },
   });
@@ -82,25 +82,39 @@ const addTransaction = async (transactionData: {
   const totalAmount = paymentData.reduce((acc, curr) => acc + curr.amount, 0);
 
   //   add transaction
-  const transaction = await db.bill.create({
+  const transaction = await db.transaction.create({
     data: {
       userId: userId,
-      paymentMethod: payment_method,
+      paymentMethodId: paymentMethodId,
+    },
+    select: {
+      id: true,
+      userId: true,
+      paymentMethod: {
+        select: {
+          name: true,
+        },
+      },
+      status: true,
+      createdAt: true,
+      updatedAt: true,
     },
   });
 
-  const transactionDetail = await db.billDetail.createMany({
+  const transactionDetail = await db.transactionDetail.createMany({
     data: paymentData.map((item) => ({
-      billId: transaction.id,
+      transactionId: transaction.id,
       paymentId: item.id,
+      notes: payment.find((payment) => payment.id === item.id)?.notes,
     })),
     skipDuplicates: true,
   });
 
   return {
-    payment_type,
+    payment_type: transaction.paymentMethod.name,
     gross_amount: totalAmount,
     order_id: transaction.id,
+    transaction,
   };
 };
 

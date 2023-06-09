@@ -50,28 +50,34 @@ const addTransactionRules = {
     notEmpty: {
       errorMessage: "Payment is required",
     },
+    custom: {
+      options: (value: Array<PaymentDetailItem>) => {
+        // must be have id and notes ar optional
+        const isValid = value.every(
+          (item) => item.id && typeof item.id === "string"
+        );
+        if (!isValid) throw new Error("Payment must be have id");
+        return true;
+      },
+    },
   },
   userId: {
     notEmpty: {
       errorMessage: "User ID is required",
     },
   },
-  payment_type: {
+  paymentMethodId: {
     notEmpty: {
-      errorMessage: "Payment Type is required",
+      errorMessage: "Payment Method Id is required",
     },
-    isIn: {
-      options: [["gopay", "bank_transfer", "qris"]],
-      errorMessage: "Payment Type must be gopay, qris or bank_transfer",
-    },
-  },
-  payment_method: {
-    notEmpty: {
-      errorMessage: "Payment Method is required",
-    },
-    isIn: {
-      options: [["Cash", "Transfer"]],
-      errorMessage: "Payment Method must be Cash or Transfer",
+    custom: {
+      options: (value: number) => {
+        // value must be integer
+        if (!Number.isInteger(value)) {
+          throw new Error("Payment Method Id must be an integer");
+        }
+        return true;
+      },
     },
   },
 };
@@ -146,8 +152,7 @@ router.post(
     const transactionData = {
       payment: transaction.payment,
       userId: transaction.userId,
-      payment_type: transaction.payment_type,
-      payment_method: transaction.payment_method,
+      paymentMethodId: transaction.paymentMethodId,
     };
 
     try {
@@ -155,7 +160,7 @@ router.post(
       const pay = await charge(result);
       res.json({
         message: "Transaction Success",
-        data: pay,
+        data: result.transaction,
       });
     } catch (error) {
       next(error);

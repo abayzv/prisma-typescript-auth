@@ -116,7 +116,7 @@ function viewUserDetails(id: string) {
           name: true,
         },
       },
-      bill: {
+      transaction: {
         select: {
           id: true,
           payment: {

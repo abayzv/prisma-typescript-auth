@@ -24,6 +24,11 @@ interface RolePermission {
   createdAt?: Date | string;
 }
 
+interface PaymentDetailItem {
+  id: string;
+  notes?: string;
+}
+
 declare enum UserRoles {
   superadmin = 1,
   admin = 2,
