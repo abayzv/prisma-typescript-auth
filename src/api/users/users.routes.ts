@@ -10,7 +10,9 @@ import {
   changeUserRole,
   updateUser,
   deleteUser,
+  createUser,
 } from "./users.services";
+import { findRoleById } from "../role/role.services";
 
 const router = express.Router();
 
@@ -95,6 +97,98 @@ const updateUserRules = {
     isLength: {
       options: { min: 3 },
       errorMessage: "Photo must be at least 3 characters long",
+    },
+  },
+};
+
+const createUserRules = {
+  email: {
+    isEmail: {
+      errorMessage: "Invalid email",
+    },
+    custom: {
+      options: async (value: any) => {
+        if (!value) return Promise.reject("Email is required");
+        const user = await findUserByEmail(value);
+        if (user) {
+          return Promise.reject("Email already in use");
+        }
+      },
+    },
+  },
+  password: {
+    isLength: {
+      options: { min: 6 },
+      errorMessage: "Password must be at least 6 characters long",
+    },
+  },
+  confirmPassword: {
+    custom: {
+      options: (value: any, { req }: any) => {
+        if (value !== req.body.password) {
+          throw new Error("Password confirmation does not match password");
+        }
+        return true;
+      },
+    },
+  },
+  name: {
+    isLength: {
+      options: { min: 3 },
+      errorMessage: "Name must be at least 3 characters long",
+    },
+  },
+  birthDate: {
+    isLength: {
+      options: { min: 3 },
+      errorMessage: "Birth Date must be at least 3 characters long",
+    },
+    isDate: {
+      errorMessage: "Birth Date must be a date",
+    },
+  },
+  address: {
+    isLength: {
+      options: { min: 3 },
+      errorMessage: "Address must be at least 3 characters long",
+    },
+  },
+  gender: {
+    isLength: {
+      options: { min: 3 },
+      errorMessage: "Gender must be at least 3 characters long",
+    },
+  },
+  religion: {
+    isLength: {
+      options: { min: 3 },
+      errorMessage: "Religion must be at least 3 characters long",
+    },
+  },
+  photo: {
+    optional: true,
+    isLength: {
+      options: { min: 3 },
+      errorMessage: "Photo must be at least 3 characters long",
+    },
+  },
+  roleId: {
+    notEmpty: {
+      errorMessage: "Role ID is required",
+    },
+    custom: {
+      options: async (value: any) => {
+        // must be integer and must be one of the roles
+        if (!value) return Promise.reject("Role ID is required");
+        if (!Number.isInteger(value)) {
+          return Promise.reject("Role ID must be an integer");
+        }
+        // check if role exists
+        const role = await findRoleById(value);
+        if (!role) {
+          return Promise.reject("Role ID does not exist");
+        }
+      },
     },
   },
 };
@@ -202,6 +296,39 @@ router.get(
       }
 
       res.json({ data: userResponse });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  "/",
+  isAuthenticated,
+  isPermited,
+  checkSchema(createUserRules),
+  async (req: any, res: any, next: any) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+
+    const data = matchedData(req);
+
+    const userData = {
+      email: data.email,
+      password: data.password,
+      roleID: data.roleId,
+      name: data.name,
+      address: data.address,
+      birthDate: new Date(data.birthDate),
+      gender: data.gender,
+      religion: data.religion,
+      photo: data.photo,
+    };
+
+    try {
+      const user = await createUser(userData);
+      res.json({ message: "User Created Succesfully" });
     } catch (error) {
       next(error);
     }

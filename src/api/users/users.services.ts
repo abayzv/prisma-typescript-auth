@@ -152,6 +152,38 @@ function viewUserDetails(id: string) {
   });
 }
 
+function createUser(user: {
+  email: string;
+  password: string;
+  roleID: UserRoles;
+  name: string;
+  birthDate?: Date;
+  address?: string;
+  gender?: string;
+  religion?: string;
+  photo?: string;
+}) {
+  user.password = bcrypt.hashSync(user.password, 12);
+
+  return db.user.create({
+    data: {
+      email: user.email,
+      password: user.password,
+      roleID: user.roleID,
+      profile: {
+        create: {
+          name: user.name,
+          birthDate: user.birthDate,
+          address: user.address,
+          gender: user.gender,
+          religion: user.religion,
+          photo: user.photo,
+        },
+      },
+    },
+  });
+}
+
 function createUserByEmailAndPassword(user: {
   email: string;
   password: string;
@@ -272,4 +304,5 @@ export {
   changeUserRole,
   updateUser,
   deleteUser,
+  createUser,
 };
