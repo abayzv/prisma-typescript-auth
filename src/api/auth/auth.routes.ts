@@ -147,6 +147,10 @@ router.post("/refreshToken", async (req: any, res: any, next: any) => {
 router.post("/revokeRefreshTokens", async (req: any, res: any, next: any) => {
   try {
     const { userId } = req.body;
+
+    const user = await findUserById(userId);
+    if (!user) return res.status(404).json({ message: `User ID not found` });
+
     await revokeTokens(userId);
     res.json({ message: `Tokens revoked for user with id #${userId}` });
   } catch (err) {

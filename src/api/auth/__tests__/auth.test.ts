@@ -1,5 +1,10 @@
 import app from "../../../app";
 import request from "supertest";
+import { db } from "../../../utils/db";
+
+let token: string = "";
+let refreshToken: string = "";
+let testEmail: string = "test@test.com";
 
 // Login Test
 describe("POST /api/v1/auth/login", () => {
@@ -28,6 +33,9 @@ describe("POST /api/v1/auth/login", () => {
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("accessToken");
     expect(response.body).toHaveProperty("refreshToken");
+
+    token = response.body.accessToken;
+    refreshToken = response.body.refreshToken;
   });
 });
 
@@ -54,12 +62,52 @@ describe("POST /api/v1/auth/register", () => {
   });
   it("should return 200 if email, password and name are valid", async () => {
     const response = await request(app).post("/api/v1/auth/register").send({
-      email: "test@test.com",
+      email: testEmail,
       password: "P@ssw0rd",
       name: "Test User",
     });
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("accessToken");
     expect(response.body).toHaveProperty("refreshToken");
+  });
+});
+
+// Refresh Token Test
+describe("POST /api/v1/auth/refreshToken", () => {
+  it("should return 400 if refreshToken is missing", async () => {
+    const response = await request(app).post("/api/v1/auth/refreshToken").send({
+      refreshToken: "",
+    });
+    expect(response.status).toBe(400);
+    expect(response.body.message).toBe("Missing refresh token.");
+  });
+  it("should return 200 if refreshToken is valid", async () => {
+    const response = await request(app).post("/api/v1/auth/refreshToken").send({
+      refreshToken: refreshToken,
+    });
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("accessToken");
+    expect(response.body).toHaveProperty("refreshToken");
+  });
+});
+
+// revoke token
+describe("POST /api/v1/auth/revokeRefreshTokens", () => {
+  it("should user id not found", async () => {
+    const response = await request(app)
+      .post("/api/v1/auth/revokeRefreshTokens")
+      .send({
+        userId: "123456789",
+      });
+    expect(response.status).toBe(404);
+    expect(response.body.message).toBe("User ID not found");
+  });
+});
+
+afterAll(async () => {
+  await db.user.delete({
+    where: {
+      email: testEmail,
+    },
   });
 });
