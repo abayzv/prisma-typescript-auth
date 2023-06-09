@@ -3,6 +3,8 @@ import core from "../../config/midtrans.js";
 import axios from "axios";
 import fetch from "node-fetch";
 import { db } from "../../utils/db";
+// @ts-ignore
+import base64img from "base64-img";
 
 const charge = async (paymentData: {
   payment_type: string;
@@ -33,8 +35,7 @@ const getStatus = async (orderId: string) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        Authorization:
-          "Basic U0ItTWlkLXNlcnZlci1qWFlzQ0pNWHFUTFRud3FoNnhWeHFwdTA6",
+        Authorization: "Basic " + btoa(process.env.MIDTRANS_SERVER_KEY + ":"),
       },
     }
   );
@@ -57,7 +58,7 @@ const cancelTransaction = async (orderId: string) => {
   )
     .then((res) => res.json())
     .then((json) => json)
-    .catch((err) => console.log(err));
+    .catch((err) => err);
   return result;
 };
 
@@ -96,8 +97,6 @@ const addTransaction = async (transactionData: {
         },
       },
       status: true,
-      createdAt: true,
-      updatedAt: true,
     },
   });
 
@@ -118,4 +117,26 @@ const addTransaction = async (transactionData: {
   };
 };
 
-export { charge, getStatus, cancelTransaction, addTransaction };
+const getQrCode = async (orderId: string) => {
+  // convert this url https://api.sandbox.midtrans.com/v2/qris/${orderId}/qr-code, to base64
+  const result = await axios
+    .get(`https://api.sandbox.midtrans.com/v2/qris/${orderId}/qr-code`, {
+      responseType: "arraybuffer",
+    })
+    .then((response) => {
+      let image = btoa(
+        new Uint8Array(response.data).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ""
+        )
+      );
+
+      return `data:${response.headers[
+        "content-type"
+      ].toLowerCase()};base64,${image}`;
+    });
+
+  return result;
+};
+
+export { charge, getStatus, cancelTransaction, addTransaction, getQrCode };

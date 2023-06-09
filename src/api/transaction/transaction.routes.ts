@@ -6,7 +6,11 @@ import {
   getStatus,
   cancelTransaction,
   addTransaction,
+  getQrCode,
 } from "./transaction.services";
+import fs from "fs";
+// @ts-ignore
+import base64img from "base64-img";
 
 const router = express.Router();
 
@@ -160,12 +164,36 @@ router.post(
       const pay = await charge(result);
       res.json({
         message: "Transaction Success",
-        data: result.transaction,
+        data: {
+          ...result.transaction,
+          details: pay,
+        },
       });
     } catch (error) {
       next(error);
     }
   }
 );
+
+router.get("/:orderId/qrcode", async (req: any, res: any, next: any) => {
+  try {
+    const { orderId } = req.params;
+    const result = await getQrCode(orderId);
+
+    const img = await base64img.imgSync(result, "", "qrcode");
+
+    if (!img) return res.status(404).json({ message: "Image not found" });
+
+    const images = fs.readFileSync(img);
+    res.writeHead(200, {
+      "Content-Type": "image/png",
+      "Content-Length": images.length,
+    });
+    res.end(images);
+  } catch {
+    const error = new Error("QR Code not found");
+    next(error);
+  }
+});
 
 export default router;

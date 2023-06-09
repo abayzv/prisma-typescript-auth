@@ -19,6 +19,7 @@
     "@prisma/client": "^4.6.0",
     "@types/supertest": "^2.0.12",
     "axios": "^1.4.0",
+    "base64-img": "^1.0.4",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
