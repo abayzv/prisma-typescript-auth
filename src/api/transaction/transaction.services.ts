@@ -139,4 +139,32 @@ const getQrCode = async (orderId: string) => {
   return result;
 };
 
-export { charge, getStatus, cancelTransaction, addTransaction, getQrCode };
+const findTransactionById = async (transactionId: string) => {
+  const transaction = await db.transaction.findUnique({
+    where: {
+      id: transactionId,
+    },
+  });
+
+  return transaction;
+};
+
+const deleteTransaction = async (transactionId: string) => {
+  const transaction = await db.transaction.delete({
+    where: {
+      id: transactionId,
+    },
+  });
+
+  return transaction;
+};
+
+export {
+  charge,
+  getStatus,
+  cancelTransaction,
+  addTransaction,
+  getQrCode,
+  deleteTransaction,
+  findTransactionById,
+};

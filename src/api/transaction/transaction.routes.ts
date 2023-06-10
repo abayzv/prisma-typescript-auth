@@ -7,6 +7,8 @@ import {
   cancelTransaction,
   addTransaction,
   getQrCode,
+  deleteTransaction,
+  findTransactionById,
 } from "./transaction.services";
 import fs from "fs";
 // @ts-ignore
@@ -209,5 +211,26 @@ router.get("/:orderId/qrcode", async (req: any, res: any, next: any) => {
     next(error);
   }
 });
+
+// Delete Transaction
+router.delete(
+  "/:id",
+  isAuthenticated,
+  isPermited,
+  async (req: any, res: any, next: any) => {
+    try {
+      const { id } = req.params;
+
+      const isExist = await findTransactionById(id);
+      if (!isExist)
+        return res.status(400).json({ message: "Transaction not found" });
+
+      const result = await deleteTransaction(id);
+      res.json({ message: "Transaction deleted" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export default router;

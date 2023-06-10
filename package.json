@@ -31,6 +31,8 @@
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.11",
     "prisma": "^4.6.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
