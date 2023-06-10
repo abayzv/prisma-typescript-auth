@@ -328,7 +328,7 @@ router.post(
 
     try {
       const user = await createUser(userData);
-      res.json({ message: "User Created Succesfully" });
+      res.json({ message: "User Created Succesfully", data: user });
     } catch (error) {
       next(error);
     }
