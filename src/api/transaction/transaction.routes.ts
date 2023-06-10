@@ -129,6 +129,7 @@ router.post(
   }
 );
 
+// Get Status
 router.get(
   "/:orderId/status",
   isAuthenticated,
@@ -154,6 +155,7 @@ router.get(
   }
 );
 
+// Add Transaction
 router.post(
   "/add",
   isAuthenticated,
@@ -186,6 +188,7 @@ router.post(
   }
 );
 
+// Get QR Code
 router.get("/:orderId/qrcode", async (req: any, res: any, next: any) => {
   try {
     const { orderId } = req.params;
