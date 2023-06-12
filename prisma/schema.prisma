@@ -26,6 +26,7 @@ model User {
   subject       Subject?       @relation(fields: [subjectId], references: [id])
   transaction   Transaction[]
   score         Score[]
+  activityLog   ActivityLog[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
@@ -180,4 +181,15 @@ model Permission {
   roles RolePermission[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  ipAddress   String
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  action      String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

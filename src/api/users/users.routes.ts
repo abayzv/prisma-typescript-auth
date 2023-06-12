@@ -1,6 +1,6 @@
 import express from "express";
 import { checkSchema, validationResult, matchedData } from "express-validator";
-import { isAuthenticated, isPermited } from "../../middlewares";
+import { isAuthenticated, isPermited, activityLogger } from "../../middlewares";
 import bcrypt from "bcrypt";
 import {
   findUserById,
@@ -306,6 +306,7 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
+  activityLogger("Create User", "Success created an users"),
   isPermited,
   checkSchema(createUserRules),
   async (req: any, res: any, next: any) => {

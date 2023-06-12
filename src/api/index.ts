@@ -1,4 +1,5 @@
 import express from "express";
+import { activityLogger } from "../middlewares";
 // @ts-ignore
 import swaggerUi from "swagger-ui-express";
 // @ts-ignore

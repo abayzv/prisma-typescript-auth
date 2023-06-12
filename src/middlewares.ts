@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { db } from "./utils/db";
+import express from "express";
 
 async function isPermited(req: any, res: any, next: any) {
   const { role } = req.payload;
@@ -55,6 +56,49 @@ function errorHandler(err: any, req: any, res: any, next: any) {
   });
 }
 
+function activityLogger(action: string, description: string, useAuth = true) {
+  return async function (req: any, res: any, next: any) {
+    const ipAddress =
+      req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+    if (!useAuth)
+      if (res.statusCode === 200) {
+        const user = await db.user.findFirst({
+          where: {
+            email: req.body.email,
+          },
+        });
+
+        const log = await db.activityLog.create({
+          data: {
+            action,
+            description,
+            // @ts-ignore
+            ipAddress,
+            // @ts-ignore
+            userId: user.id,
+          },
+        });
+
+        console.log(log);
+      }
+
+    const { userId } = req.payload;
+    const log = await db.activityLog.create({
+      data: {
+        action,
+        description,
+        // @ts-ignore
+        ipAddress,
+        // @ts-ignore
+        userId: userId,
+      },
+    });
+
+    next();
+  };
+}
+
 function isAuthenticated(req: any, res: any, next: any) {
   const { authorization } = req.headers;
 
@@ -79,4 +123,4 @@ function isAuthenticated(req: any, res: any, next: any) {
   return next();
 }
 
-export { notFound, errorHandler, isAuthenticated, isPermited };
+export { notFound, errorHandler, isAuthenticated, isPermited, activityLogger };

@@ -23,6 +23,8 @@ app.get("/", (req: express.Request, res: express.Response) => {
   });
 });
 
+// app.use(activityLogger);
+
 app.use("/api/v1", router);
 
 app.use(notFound);

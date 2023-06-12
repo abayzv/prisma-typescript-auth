@@ -1,4 +1,5 @@
 import express from "express";
+import { activityLogger } from "../../middlewares";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
@@ -52,43 +53,50 @@ router.post("/register", async (req: any, res: any, next: any) => {
   }
 });
 
-router.post("/login", async (req: any, res: any, next: any) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      res.status(400);
-      throw new Error("You must provide an email and a password.");
+router.post(
+  "/login",
+  activityLogger("Login", "User was logged in", false),
+  async (req: any, res: any, next: any) => {
+    try {
+      const { email, password } = req.body;
+      if (!email || !password) {
+        res.status(400);
+        throw new Error("You must provide an email and a password.");
+      }
+
+      const existingUser = await findUserByEmail(email);
+
+      if (!existingUser) {
+        res.status(403);
+        throw new Error("Invalid login credentials.");
+      }
+
+      const validPassword = await bcrypt.compare(
+        password,
+        existingUser.password
+      );
+      if (!validPassword) {
+        res.status(403);
+        throw new Error("Invalid login credentials.");
+      }
+
+      const jti = uuidv4();
+      const { accessToken, refreshToken } = generateTokens(existingUser, jti);
+      await addRefreshTokenToWhitelist({
+        jti,
+        refreshToken,
+        userId: existingUser.id,
+      });
+
+      res.json({
+        accessToken,
+        refreshToken,
+      });
+    } catch (err) {
+      next(err);
     }
-
-    const existingUser = await findUserByEmail(email);
-
-    if (!existingUser) {
-      res.status(403);
-      throw new Error("Invalid login credentials.");
-    }
-
-    const validPassword = await bcrypt.compare(password, existingUser.password);
-    if (!validPassword) {
-      res.status(403);
-      throw new Error("Invalid login credentials.");
-    }
-
-    const jti = uuidv4();
-    const { accessToken, refreshToken } = generateTokens(existingUser, jti);
-    await addRefreshTokenToWhitelist({
-      jti,
-      refreshToken,
-      userId: existingUser.id,
-    });
-
-    res.json({
-      accessToken,
-      refreshToken,
-    });
-  } catch (err) {
-    next(err);
   }
-});
+);
 
 router.post("/refreshToken", async (req: any, res: any, next: any) => {
   try {
