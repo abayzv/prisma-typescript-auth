@@ -61,30 +61,29 @@ function activityLogger(action: string, description: string, useAuth = true) {
     const ipAddress =
       req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-    if (!useAuth)
-      if (res.statusCode === 200) {
-        const user = await db.user.findFirst({
-          where: {
-            email: req.body.email,
-          },
-        });
+    if (!useAuth && res.statusCode === 200) {
+      const user = await db.user.findFirst({
+        where: {
+          email: req.body.email,
+        },
+      });
 
-        const log = await db.activityLog.create({
-          data: {
-            action,
-            description,
-            // @ts-ignore
-            ipAddress,
-            // @ts-ignore
-            userId: user.id,
-          },
-        });
+      await db.activityLog.create({
+        data: {
+          action,
+          description,
+          // @ts-ignore
+          ipAddress,
+          // @ts-ignore
+          userId: user.id,
+        },
+      });
 
-        console.log(log);
-      }
+      return next();
+    }
 
     const { userId } = req.payload;
-    const log = await db.activityLog.create({
+    await db.activityLog.create({
       data: {
         action,
         description,
