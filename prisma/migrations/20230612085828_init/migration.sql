@@ -105,6 +105,7 @@ CREATE TABLE "PaymentMethod" (
 -- CreateTable
 CREATE TABLE "Transaction" (
     "id" TEXT NOT NULL,
+    "referenceNumber" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "paymentMethodId" INTEGER NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'pending',
@@ -182,9 +183,6 @@ CREATE UNIQUE INDEX "Parent_userId_key" ON "Parent"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Class_teacherId_key" ON "Class"("teacherId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Permission_name_key" ON "Permission"("name");

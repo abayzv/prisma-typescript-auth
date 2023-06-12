@@ -113,9 +113,10 @@ model PaymentMethod {
 
 model Transaction {
   id        String    @id @default(uuid())
+  referenceNumber String
   userId    String
   user      User      @relation(fields: [userId], references: [id])
-  payment   TransactionDetail[]
+  items   TransactionDetail[]
   paymentMethodId Int 
   paymentMethod PaymentMethod @relation(fields: [paymentMethodId], references: [id])
   status    String    @default("pending")

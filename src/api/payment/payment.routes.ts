@@ -6,6 +6,7 @@ import {
   getPaymentById,
   getPaymentByName,
   createPayment,
+  updatePayment,
   deletePayment,
 } from "./payment.services";
 
@@ -44,6 +45,33 @@ const createRules = {
     notEmpty: {
       errorMessage: "Amount is required",
     },
+    custom: {
+      options: (value: any) => {
+        if (typeof value !== "number")
+          throw new Error("Amount must be a number");
+        return true;
+      },
+    },
+  },
+};
+
+const updateRules = {
+  name: {
+    optional: true,
+    isLength: {
+      options: { min: 3, max: 255 },
+      errorMessage: "Name must be at least 3 characters long",
+    },
+  },
+  type: {
+    optional: true,
+    isIn: {
+      options: [["semester", "monthly", "registration"]],
+      errorMessage: "Type must be semester, monthly or registration",
+    },
+  },
+  amount: {
+    optional: true,
     custom: {
       options: (value: any) => {
         if (typeof value !== "number")
@@ -118,6 +146,44 @@ router.post(
     try {
       const result = await createPayment(paymentData);
       res.json({ data: result });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// update payment
+router.put(
+  "/:id",
+  isAuthenticated,
+  isPermited,
+  checkSchema(updateRules),
+  async (req: any, res: any, next: any) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty())
+      return res.status(422).json({ errors: errors.array() });
+
+    const { id } = req.params;
+    const payment = matchedData(req);
+    const paymentData = {
+      name: payment.name,
+      type: payment.type,
+      amount: payment.amount,
+    };
+
+    const isExist = await getPaymentById(id);
+    if (!isExist) return res.status(404).json({ message: "Payment not found" });
+
+    const isExistName = await getPaymentByName(payment.name);
+    if (isExistName)
+      return res.status(409).json({
+        message: `Payment for name ${isExistName.name} is already exist`,
+      });
+
+    try {
+      const result = await updatePayment(id, paymentData);
+      res.json({ message: "Update payment success", data: result });
     } catch (err) {
       next(err);
     }

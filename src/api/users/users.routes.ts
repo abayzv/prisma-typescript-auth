@@ -244,14 +244,15 @@ router.get(
       // get user transaction
       user.transaction.forEach((transaction: any) => {
         let amount = 0;
-        transaction.payment.forEach((payment: any) => {
-          amount += payment.payment.amount;
+        transaction.items.forEach((item: any) => {
+          amount += item.payment.amount;
         });
 
         userTransaction.push({
           id: transaction.id,
           ammount: amount,
           payment: transaction.payment,
+          items: transaction.items,
           createdAt: transaction.createdAt,
           updatedAt: transaction.updatedAt,
         });

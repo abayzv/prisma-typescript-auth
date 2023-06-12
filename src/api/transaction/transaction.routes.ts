@@ -2,6 +2,7 @@ import express from "express";
 import { checkSchema, matchedData, validationResult } from "express-validator";
 import { isAuthenticated, isPermited } from "../../middlewares";
 import {
+  getAllTransaction,
   charge,
   getStatus,
   cancelTransaction,
@@ -87,6 +88,21 @@ const addTransactionRules = {
     },
   },
 };
+
+// get all transactions
+router.get(
+  "/",
+  isAuthenticated,
+  isPermited,
+  async (req: any, res: any, next: any) => {
+    try {
+      const result = await getAllTransaction();
+      res.json({ data: result });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 // Charge
 router.post(

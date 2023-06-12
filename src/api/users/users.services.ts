@@ -119,7 +119,7 @@ function viewUserDetails(id: string) {
       transaction: {
         select: {
           id: true,
-          payment: {
+          items: {
             select: {
               payment: {
                 select: {

@@ -31,7 +31,10 @@ const getPaymentById = async (id: string) => {
 const getPaymentByName = async (name: string) => {
   const payment = await db.payment.findFirst({
     where: {
-      name: name,
+      name: {
+        contains: name,
+        mode: "insensitive",
+      },
     },
   });
   return payment;
@@ -40,6 +43,20 @@ const getPaymentByName = async (name: string) => {
 // create payment
 const createPayment = async (paymentData: Prisma.PaymentCreateInput) => {
   const payment = await db.payment.create({
+    data: paymentData,
+  });
+  return payment;
+};
+
+// update payment
+const updatePayment = async (
+  id: string,
+  paymentData: Prisma.PaymentUpdateInput
+) => {
+  const payment = await db.payment.update({
+    where: {
+      id: id,
+    },
     data: paymentData,
   });
   return payment;
@@ -60,5 +77,6 @@ export {
   getPaymentById,
   getPaymentByName,
   createPayment,
+  updatePayment,
   deletePayment,
 };

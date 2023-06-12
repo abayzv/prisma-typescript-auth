@@ -6,6 +6,61 @@ import { db } from "../../utils/db";
 // @ts-ignore
 import base64img from "base64-img";
 
+const getAllTransaction = async () => {
+  const transactions = await db.transaction.findMany({
+    select: {
+      id: true,
+      referenceNumber: true,
+      items: {
+        select: {
+          payment: {
+            select: {
+              name: true,
+              type: true,
+              amount: true,
+            },
+          },
+        },
+      },
+      user: {
+        select: {
+          profile: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      paymentMethod: {
+        select: {
+          name: true,
+        },
+      },
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  const newTransactions = transactions.map((transaction) => {
+    let total = 0;
+    transaction.items.map((item) => {
+      total += item.payment.amount;
+    });
+
+    return {
+      id: transaction.id,
+      referenceNumber: transaction.referenceNumber,
+      user: transaction.user.profile?.name,
+      total,
+      paymentMethod: transaction.paymentMethod?.name,
+      createdAt: transaction.createdAt,
+      updatedAt: transaction.updatedAt,
+    };
+  });
+
+  return newTransactions;
+};
+
 const charge = async (paymentData: {
   payment_type: string;
   gross_amount: number;
@@ -82,9 +137,16 @@ const addTransaction = async (transactionData: {
   //   get total payment amount
   const totalAmount = paymentData.reduce((acc, curr) => acc + curr.amount, 0);
 
+  const generateReferenceNumber =
+    "INV-" +
+    Math.floor(100000 + Math.random() * 900000) +
+    "-" +
+    new Date().toISOString().slice(11, 16).replace(":", "");
+
   //   add transaction
   const transaction = await db.transaction.create({
     data: {
+      referenceNumber: generateReferenceNumber,
       userId: userId,
       paymentMethodId: paymentMethodId,
     },
@@ -160,6 +222,7 @@ const deleteTransaction = async (transactionId: string) => {
 };
 
 export {
+  getAllTransaction,
   charge,
   getStatus,
   cancelTransaction,

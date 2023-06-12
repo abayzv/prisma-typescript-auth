@@ -235,9 +235,16 @@ async function main() {
     },
   });
 
+  const generateReferenceNumber =
+    "INV-" +
+    Math.floor(100000 + Math.random() * 900000) +
+    "-" +
+    new Date().toISOString().slice(11, 16).replace(":", "");
+
   // create transaction
   const transaction1 = await prisma.transaction.create({
     data: {
+      referenceNumber: generateReferenceNumber,
       userId: studentUser.id,
       paymentMethodId: qris.id,
     },
