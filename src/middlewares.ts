@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { db } from "./utils/db";
-import express from "express";
+import { findRefreshTokenByUserId } from "./api/auth/auth.services";
 
 async function isPermited(req: any, res: any, next: any) {
   const { role } = req.payload;
@@ -98,7 +98,7 @@ function activityLogger(action: string, description: string, useAuth = true) {
   };
 }
 
-function isAuthenticated(req: any, res: any, next: any) {
+async function isAuthenticated(req: any, res: any, next: any) {
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -111,6 +111,11 @@ function isAuthenticated(req: any, res: any, next: any) {
     // @ts-ignore
     const payload = jwt.verify(token, process.env.JWT_ACCESS_SECRET) as any;
     req.payload = payload;
+    const { userId } = payload;
+    const activeRefreshToken = await findRefreshTokenByUserId(userId);
+
+    if (!activeRefreshToken)
+      return res.status(401).json({ message: "Un-Authorized" });
   } catch (err: any) {
     res.status(401);
     if (err.name === "TokenExpiredError") {

@@ -49,9 +49,21 @@ function revokeTokens(userId: string) {
   });
 }
 
+// find refreshTokenByUserId
+const findRefreshTokenByUserId = (userId: string) => {
+  // find refreshToken by userId and revoked = false
+  return db.refreshToken.findFirst({
+    where: {
+      userId,
+      revoked: false,
+    },
+  });
+};
+
 export {
   addRefreshTokenToWhitelist,
   findRefreshTokenById,
   deleteRefreshToken,
   revokeTokens,
+  findRefreshTokenByUserId,
 };
