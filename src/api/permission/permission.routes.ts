@@ -1,6 +1,6 @@
 import express from "express";
 import { checkSchema, validationResult, matchedData } from "express-validator";
-import { isPermited, isAuthenticated } from "../../middlewares";
+import { isPermited, isAuthenticated, activityLogger } from "../../middlewares";
 import {
   viewAllPermissions,
   createPermission,
@@ -90,6 +90,7 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
+  activityLogger("Create Permission", "Successfully create permission"),
   isPermited,
   checkSchema(rules),
   async (req: any, res: any, next: any) => {
@@ -123,6 +124,7 @@ router.post(
 router.put(
   "/:id",
   isAuthenticated,
+  activityLogger("Update Permission", "Successfully update permission"),
   isPermited,
   checkSchema(editRules),
   async (req: any, res: any, next: any) => {
@@ -166,6 +168,7 @@ router.put(
 router.delete(
   "/:id",
   isAuthenticated,
+  activityLogger("Delete Permission", "Successfully delete permission"),
   isPermited,
   async (req: any, res: any, next: any) => {
     const id = +req.params.id;

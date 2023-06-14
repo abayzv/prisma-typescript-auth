@@ -8,7 +8,6 @@ async function main() {
 
   const create = await prisma.permission.create({
     data: {
-      id: 1,
       name: "Create User",
       action: "POST",
       menu: "user",
@@ -17,7 +16,6 @@ async function main() {
 
   const read = await prisma.permission.create({
     data: {
-      id: 2,
       name: "View User",
       action: "GET",
       menu: "user",
@@ -26,7 +24,6 @@ async function main() {
 
   const update = await prisma.permission.create({
     data: {
-      id: 3,
       name: "Update User",
       action: "PUT",
       menu: "user",
@@ -35,7 +32,6 @@ async function main() {
 
   const delete_ = await prisma.permission.create({
     data: {
-      id: 4,
       name: "Delete User",
       action: "DELETE",
       menu: "user",
@@ -45,35 +41,30 @@ async function main() {
   // Create some roles
   const superadmin = await prisma.role.create({
     data: {
-      id: 1,
       name: "superadmin",
     },
   });
 
   const admin = await prisma.role.create({
     data: {
-      id: 2,
       name: "admin",
     },
   });
 
   const teacher = await prisma.role.create({
     data: {
-      id: 3,
       name: "teacher",
     },
   });
 
   const student = await prisma.role.create({
     data: {
-      id: 4,
       name: "student",
     },
   });
 
   const parent = await prisma.role.create({
     data: {
-      id: 5,
       name: "parent",
     },
   });

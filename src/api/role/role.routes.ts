@@ -1,6 +1,6 @@
 import express from "express";
 import { checkSchema, validationResult, matchedData } from "express-validator";
-import { isPermited, isAuthenticated } from "../../middlewares";
+import { isPermited, isAuthenticated, activityLogger } from "../../middlewares";
 import {
   viewAllRoles,
   createRole,
@@ -79,6 +79,7 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
+  activityLogger("Create Role", "Successfully create role"),
   isPermited,
   checkSchema(rules),
   async (req: any, res: any, next: any) => {
@@ -113,6 +114,7 @@ router.post(
 router.put(
   "/:id",
   isAuthenticated,
+  activityLogger("Update Role", "Successfully update role"),
   isPermited,
   checkSchema(rules),
   async (req: any, res: any, next: any) => {
@@ -148,6 +150,7 @@ router.put(
 router.delete(
   "/:id",
   isAuthenticated,
+  activityLogger("Delete Role", "Successfully delete role"),
   isPermited,
   async (req: any, res: any, next: any) => {
     const id = +req.params.id;
@@ -170,6 +173,7 @@ router.delete(
 router.post(
   "/assign/:id",
   isAuthenticated,
+  activityLogger("Assign Role Permission", "Successfully assign permission"),
   isPermited,
   checkSchema(rolePermissionRules),
   async (req: any, res: any, next: any) => {
@@ -211,6 +215,10 @@ router.post(
 router.delete(
   "/unassign/:id",
   isAuthenticated,
+  activityLogger(
+    "Unassign Role Permission",
+    "Successfully unassign permission"
+  ),
   isPermited,
   checkSchema(rolePermissionRules),
   async (req: any, res: any, next: any) => {

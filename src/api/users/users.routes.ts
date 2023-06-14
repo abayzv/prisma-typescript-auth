@@ -306,7 +306,7 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
-  activityLogger("Create User", "Success created an users"),
+  activityLogger("Create User", "Successfully create a new user"),
   isPermited,
   checkSchema(createUserRules),
   async (req: any, res: any, next: any) => {
@@ -340,6 +340,7 @@ router.post(
 router.put(
   "/role/:id",
   isAuthenticated,
+  activityLogger("Change User Role", "Successfully change user role"),
   isPermited,
   checkSchema(changeUserRoleRules),
   async (req: any, res: any, next: any) => {
@@ -416,6 +417,7 @@ router.put(
 router.delete(
   "/:id",
   isAuthenticated,
+  activityLogger("Delete User", "Successfully delete a use"),
   isPermited,
   async (req: any, res: any, next: any) => {
     try {

@@ -169,6 +169,19 @@ CREATE TABLE "Permission" (
     CONSTRAINT "Permission_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "ActivityLog" (
+    "id" TEXT NOT NULL,
+    "ipAddress" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "action" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ActivityLog_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
@@ -231,3 +244,6 @@ ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_roleId_fkey" FOREIGN
 
 -- AddForeignKey
 ALTER TABLE "RolePermission" ADD CONSTRAINT "RolePermission_permissionId_fkey" FOREIGN KEY ("permissionId") REFERENCES "Permission"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ActivityLog" ADD CONSTRAINT "ActivityLog_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

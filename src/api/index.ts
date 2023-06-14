@@ -12,6 +12,7 @@ import role from "./role/role.routes";
 import permission from "./permission/permission.routes";
 import transaction from "./transaction/transaction.routes";
 import payment from "./payment/payment.routes";
+import log from "./log/log.routes";
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.use("/roles", role);
 router.use("/permissions", permission);
 router.use("/transactions", transaction);
 router.use("/payments", payment);
+router.use("/logs", log);
 
 // Swagger setup
 

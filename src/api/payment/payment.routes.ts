@@ -1,6 +1,6 @@
 import express from "express";
 import { checkSchema, validationResult, matchedData } from "express-validator";
-import { isPermited, isAuthenticated } from "../../middlewares";
+import { isPermited, isAuthenticated, activityLogger } from "../../middlewares";
 import {
   getAllPayment,
   getPaymentById,
@@ -124,6 +124,7 @@ router.get(
 router.post(
   "/",
   isAuthenticated,
+  activityLogger("Create Payment", "Successfully create payment"),
   isPermited,
   checkSchema(createRules),
   async (req: any, res: any, next: any) => {
@@ -156,6 +157,7 @@ router.post(
 router.put(
   "/:id",
   isAuthenticated,
+  activityLogger("Update Payment", "Successfully update payment"),
   isPermited,
   checkSchema(updateRules),
   async (req: any, res: any, next: any) => {
@@ -194,6 +196,7 @@ router.put(
 router.delete(
   "/:id",
   isAuthenticated,
+  activityLogger("Delete Payment", "Successfully delete payment"),
   isPermited,
   async (req: any, res: any, next: any) => {
     try {
