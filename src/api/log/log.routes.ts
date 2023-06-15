@@ -30,8 +30,8 @@ const rules = {
 // Get all logs
 router.get(
   "/",
-  //   isAuthenticated,
-  //   isPermited,
+  isAuthenticated,
+  isPermited,
   checkSchema(rules),
   async (req: any, res: any, next: any) => {
     const errors = validationResult(req);

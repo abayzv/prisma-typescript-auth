@@ -3,11 +3,39 @@ import core from "../../config/midtrans.js";
 import axios from "axios";
 import fetch from "node-fetch";
 import { db } from "../../utils/db";
-// @ts-ignore
-import base64img from "base64-img";
 
-const getAllTransaction = async () => {
+const getAllTransaction = async (query: {
+  referenceId?: string;
+  startDate?: Date;
+  endDate?: Date;
+  page: number;
+  show: number;
+}) => {
+  const paginate = +query.show || 10;
+  let startDate = new Date("2021-01-01");
+  let endDate = new Date();
+
+  if (query.startDate) {
+    startDate = new Date(query.startDate);
+  }
+
+  if (query.endDate) {
+    endDate = new Date(query.endDate);
+    endDate.setDate(endDate.getDate() + 1);
+  }
+
   const transactions = await db.transaction.findMany({
+    take: paginate,
+    where: {
+      referenceNumber: {
+        contains: query.referenceId || "",
+        mode: "insensitive",
+      },
+      createdAt: {
+        gte: startDate,
+        lte: endDate,
+      },
+    },
     select: {
       id: true,
       referenceNumber: true,
@@ -36,10 +64,14 @@ const getAllTransaction = async () => {
           name: true,
         },
       },
+      status: true,
       createdAt: true,
       updatedAt: true,
     },
   });
+  console.log(transactions);
+
+  const count = transactions.length;
 
   const newTransactions = transactions.map((transaction) => {
     let total = 0;
@@ -53,12 +85,59 @@ const getAllTransaction = async () => {
       user: transaction.user.profile?.name,
       total,
       paymentMethod: transaction.paymentMethod?.name,
+      status: transaction.status,
       createdAt: transaction.createdAt,
       updatedAt: transaction.updatedAt,
     };
   });
 
-  return newTransactions;
+  return {
+    data: newTransactions,
+    totalPage: Math.ceil(count / paginate).toString(),
+    page: query.page || "1",
+  };
+};
+
+const getTransactionById = async (id: string) => {
+  const transaction = await db.transaction.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      id: true,
+      referenceNumber: true,
+      items: {
+        select: {
+          payment: {
+            select: {
+              name: true,
+              type: true,
+              amount: true,
+            },
+          },
+        },
+      },
+      user: {
+        select: {
+          profile: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      paymentMethod: {
+        select: {
+          name: true,
+        },
+      },
+      status: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return transaction;
 };
 
 const charge = async (paymentData: {
@@ -230,4 +309,5 @@ export {
   getQrCode,
   deleteTransaction,
   findTransactionById,
+  getTransactionById,
 };

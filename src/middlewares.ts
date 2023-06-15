@@ -101,10 +101,7 @@ function activityLogger(action: string, description: string, useAuth = true) {
 async function isAuthenticated(req: any, res: any, next: any) {
   const { authorization } = req.headers;
 
-  if (!authorization) {
-    res.status(401);
-    throw new Error(" Un-Authorized ");
-  }
+  if (!authorization) return res.status(401).json({ message: "Un-Authorized" });
 
   try {
     const token = authorization.split(" ")[1];
@@ -119,9 +116,9 @@ async function isAuthenticated(req: any, res: any, next: any) {
   } catch (err: any) {
     res.status(401);
     if (err.name === "TokenExpiredError") {
-      throw new Error(err.name);
+      next(new Error("Token Expired"));
     }
-    throw new Error(" Un-Authorized ");
+    next(new Error("Un-Authorized"));
   }
 
   return next();

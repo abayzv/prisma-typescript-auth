@@ -48,24 +48,7 @@ async function viewAllUsers(query: {
     },
   });
 
-  const count = await db.user.count({
-    where: {
-      role: {
-        name: {
-          contains: query.role || "",
-          mode: "insensitive",
-        },
-      },
-      profile: {
-        name: {
-          contains: query.name || "",
-          mode: "insensitive",
-        },
-        // religion: null || query.religion,
-        // gender: null || query.gender,
-      },
-    },
-  });
+  const count = data.length;
 
   return {
     data,

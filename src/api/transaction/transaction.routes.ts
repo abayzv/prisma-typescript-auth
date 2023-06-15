@@ -1,5 +1,10 @@
 import express from "express";
-import { checkSchema, matchedData, validationResult } from "express-validator";
+import {
+  check,
+  checkSchema,
+  matchedData,
+  validationResult,
+} from "express-validator";
 import { isAuthenticated, isPermited, activityLogger } from "../../middlewares";
 import {
   getAllTransaction,
@@ -10,6 +15,7 @@ import {
   getQrCode,
   deleteTransaction,
   findTransactionById,
+  getTransactionById,
 } from "./transaction.services";
 import fs from "fs";
 // @ts-ignore
@@ -45,6 +51,24 @@ const rules = {
     optional: true,
     isURL: {
       errorMessage: "Callback URL must be a valid URL",
+    },
+  },
+};
+
+const queryRules = {
+  referenceId: {
+    optional: true,
+  },
+  startDate: {
+    optional: true,
+    isDate: {
+      errorMessage: "Start Date must be a valid date",
+    },
+  },
+  endDate: {
+    optional: true,
+    isDate: {
+      errorMessage: "End Date must be a valid date",
     },
   },
 };
@@ -94,9 +118,44 @@ router.get(
   "/",
   isAuthenticated,
   isPermited,
+  checkSchema(queryRules),
+  async (req: any, res: any, next: any) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) return res.status(422).json(errors.array());
+
+    const { referenceId, startDate, endDate } = matchedData(req, {
+      locations: ["query"],
+    });
+    const query = {
+      referenceId,
+      startDate,
+      endDate,
+      page: req.query.page,
+      show: req.query.show,
+    };
+
+    try {
+      const result = await getAllTransaction(query);
+      res.json(result);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// get transaction by id
+router.get(
+  "/:id",
+  isAuthenticated,
+  isPermited,
   async (req: any, res: any, next: any) => {
     try {
-      const result = await getAllTransaction();
+      const { id } = req.params;
+      const result = await getTransactionById(id);
+
+      if (!result)
+        return res.status(404).json({ message: "Transaction not found" });
+
       res.json({ data: result });
     } catch (error) {
       next(error);

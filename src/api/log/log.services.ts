@@ -1,6 +1,4 @@
-import { start } from "repl";
 import { db } from "../../utils/db";
-import e from "express";
 
 // get all log
 const getAllLog = async (query: {
@@ -61,26 +59,7 @@ const getAllLog = async (query: {
       createdAt: true,
     },
   });
-  const count = await db.activityLog.count({
-    where: {
-      action: {
-        contains: query.action || "",
-        mode: "insensitive",
-      },
-      user: {
-        profile: {
-          name: {
-            contains: query.name || "",
-            mode: "insensitive",
-          },
-        },
-      },
-      createdAt: {
-        gte: startDate,
-        lte: endDate,
-      },
-    },
-  });
+  const count = data.length;
 
   return {
     data,
