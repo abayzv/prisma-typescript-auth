@@ -2,10 +2,19 @@ import { db } from "../../utils/db";
 import { PaymentType, Prisma } from "@prisma/client";
 
 // get all payment
-const getAllPayment = async (query: { name?: string; type?: PaymentType }) => {
+const getAllPayment = async (query: {
+  name?: string;
+  type?: PaymentType;
+  page: number;
+  show: number;
+}) => {
   const { name, type } = query;
+  const paginate = +query.show || 10;
+  const skipData = (+query.page - 1) * paginate || 0;
 
   const payments = await db.payment.findMany({
+    skip: skipData,
+    take: paginate,
     where: {
       name: {
         contains: name,
@@ -14,7 +23,22 @@ const getAllPayment = async (query: { name?: string; type?: PaymentType }) => {
       type: type,
     },
   });
-  return payments;
+
+  const count = await db.payment.count({
+    where: {
+      name: {
+        contains: name,
+        mode: "insensitive",
+      },
+      type: type,
+    },
+  });
+
+  return {
+    data: payments,
+    totalPage: Math.ceil(count / paginate).toString(),
+    page: query.page || "1",
+  };
 };
 
 // get payment by id

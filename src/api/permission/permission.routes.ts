@@ -78,8 +78,14 @@ router.get(
   isPermited,
   async (req: any, res: any, next: any) => {
     try {
-      const permissions = await viewAllPermissions(req.query);
-      res.json({ data: permissions });
+      const query = {
+        name: req.query.name,
+        page: req.query.page,
+        show: req.query.show,
+      };
+
+      const permissions = await viewAllPermissions(query);
+      res.json(permissions);
     } catch (error) {
       next(error);
     }

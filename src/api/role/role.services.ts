@@ -1,8 +1,17 @@
 import { db } from "../../utils/db";
 import { Prisma } from "@prisma/client";
 
-const viewAllRoles = (query: { name?: string }) => {
-  return db.role.findMany({
+const viewAllRoles = async (query: {
+  name?: string;
+  page: number;
+  show: number;
+}) => {
+  const paginate = +query.show || 10;
+  const skipData = (+query.page - 1) * paginate || 0;
+
+  const role = await db.role.findMany({
+    take: paginate,
+    skip: skipData,
     where: {
       name: {
         contains: query.name || "",
@@ -16,6 +25,21 @@ const viewAllRoles = (query: { name?: string }) => {
       updatedAt: true,
     },
   });
+
+  const count = await db.role.count({
+    where: {
+      name: {
+        contains: query.name || "",
+        mode: "insensitive",
+      },
+    },
+  });
+
+  return {
+    data: role,
+    totalPage: Math.ceil(count / paginate).toString(),
+    page: query.page || "1",
+  };
 };
 
 const findRoleByName = (name: string) => {

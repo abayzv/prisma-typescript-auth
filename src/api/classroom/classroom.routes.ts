@@ -130,11 +130,11 @@ router.post(
       teacherId: match.teacherId,
     };
 
-    const isHaveClass = await isHaveClassRoom(match.teacerId);
+    const isHaveClass = await isHaveClassRoom(match.teacherId);
     if (isHaveClass)
-      return res
-        .status(422)
-        .json({ message: "Teacher already have a classroom" });
+      return res.status(422).json({
+        message: "Teacher already have a classroom",
+      });
 
     try {
       const classroom = await createClassroom(classRoomData);
@@ -175,9 +175,10 @@ router.put(
 
       const isHaveClass = await isHaveClassRoom(match.teacherId);
       if (isHaveClass)
-        return res
-          .status(422)
-          .json({ message: "Teacher already have a classroom" });
+        return res.status(422).json({
+          message: "Teacher already have a classroom",
+          data: isHaveClass,
+        });
     }
 
     try {

@@ -1,8 +1,17 @@
 import { db } from "../../utils/db";
 import { Prisma } from "@prisma/client";
 
-const viewAllPermissions = (query: { name?: string }) => {
-  return db.permission.findMany({
+const viewAllPermissions = async (query: {
+  name?: string;
+  page: number;
+  show: number;
+}) => {
+  const paginate = +query.show || 10;
+  const skipData = (+query.page - 1) * paginate || 0;
+
+  const permission = await db.permission.findMany({
+    take: paginate,
+    skip: skipData,
     where: {
       name: {
         contains: query.name || "",
@@ -18,6 +27,21 @@ const viewAllPermissions = (query: { name?: string }) => {
       updatedAt: true,
     },
   });
+
+  const count = await db.permission.count({
+    where: {
+      name: {
+        contains: query.name || "",
+        mode: "insensitive",
+      },
+    },
+  });
+
+  return {
+    data: permission,
+    totalPage: Math.ceil(count / paginate).toString(),
+    page: query.page || "1",
+  };
 };
 
 const findPermissionByName = (name: string) => {

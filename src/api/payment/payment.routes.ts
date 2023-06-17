@@ -90,8 +90,17 @@ router.get(
   checkSchema(rules),
   async (req: any, res: any, next: any) => {
     try {
-      validationResult(req).throw();
-      const query = matchedData(req, { locations: ["query"] });
+      const error = validationResult(req);
+      if (!error.isEmpty()) return res.status(422).json(error.array());
+
+      const { name, type } = matchedData(req, { locations: ["query"] });
+      const query = {
+        name,
+        type,
+        page: req.query.page,
+        show: req.query.show,
+      };
+
       const payments = await getAllPayment(query);
       res.json({ data: payments });
     } catch (err) {

@@ -206,7 +206,12 @@ router.get(
   isAuthenticated,
   isPermited,
   async (req: any, res: any, next: any) => {
-    const query = req.query;
+    const query = {
+      name: req.query.name,
+      role: req.query.role,
+      page: req.query.page,
+      show: req.query.show,
+    };
 
     try {
       const users = await viewAllUsers(query);

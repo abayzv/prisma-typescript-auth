@@ -12,6 +12,7 @@ const getAllTransaction = async (query: {
   show: number;
 }) => {
   const paginate = +query.show || 10;
+  const skipData = (+query.page - 1) * paginate || 0;
   let startDate = new Date("2021-01-01");
   let endDate = new Date();
 
@@ -25,6 +26,7 @@ const getAllTransaction = async (query: {
   }
 
   const transactions = await db.transaction.findMany({
+    skip: skipData,
     take: paginate,
     where: {
       referenceNumber: {

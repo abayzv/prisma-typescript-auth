@@ -10,6 +10,7 @@ const getAllLog = async (query: {
   show: number;
 }) => {
   const paginate = +query.show || 10;
+  const skipData = (+query.page - 1) * paginate || 0;
   let startDate = new Date("2021-01-01");
   let endDate = new Date();
 
@@ -23,6 +24,7 @@ const getAllLog = async (query: {
   }
 
   const data = await db.activityLog.findMany({
+    skip: skipData,
     take: paginate,
     where: {
       action: {
@@ -59,7 +61,26 @@ const getAllLog = async (query: {
       createdAt: true,
     },
   });
-  const count = data.length;
+  const count = await db.activityLog.count({
+    where: {
+      action: {
+        contains: query.action || "",
+        mode: "insensitive",
+      },
+      user: {
+        profile: {
+          name: {
+            contains: query.name || "",
+            mode: "insensitive",
+          },
+        },
+      },
+      createdAt: {
+        gte: startDate,
+        lte: endDate,
+      },
+    },
+  });
 
   const logData = data.map((log) => {
     return {

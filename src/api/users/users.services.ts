@@ -11,8 +11,11 @@ async function viewAllUsers(query: {
   show: number;
 }) {
   const paginate = +query.show || 10;
+  const skipData = (+query.page - 1) * paginate || 0;
+
   const data = await db.user.findMany({
     take: paginate,
+    skip: skipData,
     where: {
       role: {
         name: {
@@ -48,7 +51,24 @@ async function viewAllUsers(query: {
     },
   });
 
-  const count = data.length;
+  const count = await db.user.count({
+    where: {
+      role: {
+        name: {
+          contains: query.role || "",
+          mode: "insensitive",
+        },
+      },
+      profile: {
+        name: {
+          contains: query.name || "",
+          mode: "insensitive",
+        },
+        // religion: null || query.religion,
+        // gender: null || query.gender,
+      },
+    },
+  });
 
   return {
     data,

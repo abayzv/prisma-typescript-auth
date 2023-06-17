@@ -8,7 +8,9 @@ const getAllClassroom = async (query: {
   show: number;
 }) => {
   const paginate = +query.show || 10;
+  const skipData = (+query.page - 1) * paginate || 0;
   const data = await db.class.findMany({
+    skip: skipData,
     take: paginate,
     where: {
       name: {
@@ -34,7 +36,15 @@ const getAllClassroom = async (query: {
     },
   });
 
-  const count = data.length;
+  const count = await db.class.count({
+    where: {
+      name: {
+        contains: query.name || "",
+        mode: "insensitive",
+      },
+    },
+  });
+
   const dataClassrooms = data.map((classroom) => {
     return {
       id: classroom.id,
