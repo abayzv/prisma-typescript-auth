@@ -71,7 +71,18 @@ const getAllTransaction = async (query: {
   });
   console.log(transactions);
 
-  const count = transactions.length;
+  const count = await db.transaction.count({
+    where: {
+      referenceNumber: {
+        contains: query.referenceId || "",
+        mode: "insensitive",
+      },
+      createdAt: {
+        gte: startDate,
+        lte: endDate,
+      },
+    },
+  });
 
   const newTransactions = transactions.map((transaction) => {
     let total = 0;

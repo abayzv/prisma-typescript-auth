@@ -130,6 +130,16 @@ const findTeacherById = async (id: string) => {
   return data;
 };
 
+const findClassRoomByName = async (name: string) => {
+  const data = await db.class.findFirst({
+    where: {
+      name: name,
+    },
+  });
+
+  return data;
+};
+
 const deleteClassroom = async (id: string) => {
   const classroom = await db.class.delete({
     where: {
@@ -145,5 +155,6 @@ export {
   isHaveClassRoom,
   updateClassroom,
   findTeacherById,
+  findClassRoomByName,
   deleteClassroom,
 };

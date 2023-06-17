@@ -208,12 +208,20 @@ async function main() {
     },
   });
 
+  // create scoreCategory
+  const scoreCategory1 = await prisma.scoreCategory.create({
+    data: {
+      name: "Ulangan Harian",
+    },
+  });
+
   // create score
   const score1 = await prisma.score.create({
     data: {
-      score: 90,
       subjectId: subject1.id,
       userId: studentUser.id,
+      score: 90,
+      categoryId: scoreCategory1.id,
     },
   });
 

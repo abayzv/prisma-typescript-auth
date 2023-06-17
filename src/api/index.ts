@@ -15,14 +15,9 @@ import payment from "./payment/payment.routes";
 import log from "./log/log.routes";
 import classroom from "./classroom/classroom.routes";
 import list from "./list/list.routes";
+import subject from "./subject/subject.routes";
 
 const router = express.Router();
-
-router.get("/", (req: any, res: any) => {
-  res.json({
-    message: "API - hi",
-  });
-});
 
 router.use("/auth", auth);
 router.use("/users", users);
@@ -33,6 +28,7 @@ router.use("/payments", payment);
 router.use("/logs", log);
 router.use("/classrooms", classroom);
 router.use("/list", list);
+router.use("/subjects", subject);
 
 // Swagger setup
 

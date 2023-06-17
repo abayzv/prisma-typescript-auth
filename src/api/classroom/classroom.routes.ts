@@ -7,6 +7,7 @@ import {
   updateClassroom,
   findTeacherById,
   deleteClassroom,
+  findClassRoomByName,
 } from "./classroom.services";
 import { isPermited, isAuthenticated } from "../../middlewares";
 import { checkSchema, validationResult, matchedData } from "express-validator";
@@ -117,6 +118,13 @@ router.post(
     const match = matchedData(req, {
       locations: ["body"],
     });
+
+    const isExist = await findClassRoomByName(match.name);
+    if (isExist)
+      return res
+        .status(422)
+        .json({ message: "Classroom name is already exist" });
+
     const classRoomData = {
       name: match.name,
       teacherId: match.teacherId,

@@ -76,12 +76,22 @@ model Class {
   updatedAt DateTime  @updatedAt
 }
 
+model ScoreCategory {
+  id        String    @id @default(uuid())
+  name      String
+  score     Score[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
 model Score {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   subjectId String
   subject   Subject  @relation(fields: [subjectId], references: [id])
   score     Int
+  categoryId String
+  category  ScoreCategory @relation(fields: [categoryId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
