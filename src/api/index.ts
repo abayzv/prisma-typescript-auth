@@ -13,6 +13,8 @@ import permission from "./permission/permission.routes";
 import transaction from "./transaction/transaction.routes";
 import payment from "./payment/payment.routes";
 import log from "./log/log.routes";
+import classroom from "./classroom/classroom.routes";
+import list from "./list/list.routes";
 
 const router = express.Router();
 
@@ -29,6 +31,8 @@ router.use("/permissions", permission);
 router.use("/transactions", transaction);
 router.use("/payments", payment);
 router.use("/logs", log);
+router.use("/classrooms", classroom);
+router.use("/list", list);
 
 // Swagger setup
 

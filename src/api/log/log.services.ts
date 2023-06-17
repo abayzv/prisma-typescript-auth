@@ -61,8 +61,19 @@ const getAllLog = async (query: {
   });
   const count = data.length;
 
+  const logData = data.map((log) => {
+    return {
+      id: log.id,
+      action: log.action,
+      userId: log.userId,
+      userName: log.user?.profile?.name,
+      description: log.description,
+      createdAt: log.createdAt,
+    };
+  });
+
   return {
-    data,
+    data: logData,
     totalPage: Math.ceil(count / paginate).toString(),
     page: query.page || "1",
   };

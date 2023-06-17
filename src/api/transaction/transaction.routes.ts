@@ -156,7 +156,24 @@ router.get(
       if (!result)
         return res.status(404).json({ message: "Transaction not found" });
 
-      res.json({ data: result });
+      const transactions = {
+        id: result.id,
+        referenceId: result.referenceNumber,
+        paymentMethod: result.paymentMethod.name,
+        status: result.status,
+        user: {
+          name: result.user?.profile?.name,
+        },
+        items: result.items.map((item: any) => ({
+          name: item.payment.name,
+          type: item.payment.type,
+          amount: item.payment.amount,
+          notes: item.notes,
+        })),
+        createdAt: result.createdAt,
+      };
+
+      res.json({ data: transactions });
     } catch (error) {
       next(error);
     }

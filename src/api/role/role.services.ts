@@ -107,6 +107,21 @@ const deleteRolePermission = (
   });
 };
 
+const isRolePermissionExist = (rolePermission: RolePermission[]) => {
+  return db.rolePermission.findMany({
+    where: {
+      OR: rolePermission,
+    },
+    select: {
+      permission: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+};
+
 export {
   viewAllRoles,
   showRole,
@@ -117,4 +132,5 @@ export {
   findRoleById,
   assignRolePermission,
   deleteRolePermission,
+  isRolePermissionExist,
 };

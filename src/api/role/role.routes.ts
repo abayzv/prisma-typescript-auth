@@ -10,6 +10,7 @@ import {
   findRoleById,
   assignRolePermission,
   deleteRolePermission,
+  isRolePermissionExist,
 } from "./role.services";
 
 const router = express.Router();
@@ -200,6 +201,18 @@ router.post(
         permissionId: permission,
       };
     });
+
+    const isExist = await isRolePermissionExist(mappedPermission);
+    if (isExist)
+      return res.status(400).json({
+        message:
+          "Permission already assigned, please change to another permission",
+        data: isExist.map((item) => {
+          return {
+            name: item.permission.name,
+          };
+        }),
+      });
 
     // assign permission
     try {

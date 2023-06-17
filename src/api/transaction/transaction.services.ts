@@ -108,6 +108,7 @@ const getTransactionById = async (id: string) => {
       referenceNumber: true,
       items: {
         select: {
+          notes: true,
           payment: {
             select: {
               name: true,
