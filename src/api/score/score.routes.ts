@@ -1,7 +1,12 @@
 import express from "express";
 import { checkSchema, validationResult, matchedData } from "express-validator";
 import { isPermited, isAuthenticated, activityLogger } from "../../middlewares";
-import { createScoreList, updateScore, deleteScore } from "./score.services";
+import {
+  createScoreList,
+  updateScore,
+  deleteScore,
+  findScoreById,
+} from "./score.services";
 import { findUserById } from "../users/users.services";
 import { findSubjectByManyId } from "../subject/subject.services";
 import { getClassroomsById } from "../classroom/classroom.services";
@@ -198,37 +203,18 @@ router.put(
 
 // delete score
 router.delete(
-  "/",
+  "/:id",
   isAuthenticated,
   isPermited,
-  checkSchema(deleteRules),
   activityLogger("Delete Score", "Score Successfully Deleted"),
   async (req: any, res: any, next: any) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(422).json(errors.array());
+    const { id } = req.params;
 
-    const { userId, subjectId, scoreCategoryId, score } = matchedData(req, {
-      locations: ["body"],
-    });
-
-    const user = await findUserById(userId);
-    if (!user) return res.status(422).json({ message: "User not found" });
-
-    const subject = await findSubjectByManyId(subjectId);
-    if (!subject) return res.status(422).json({ message: "Subject not found" });
-
-    const scoreCategory = await findScoreCategoryById(scoreCategoryId);
-    if (!scoreCategory)
-      return res.status(422).json({ message: "Score Category not found" });
-
-    const dataScore = {
-      userId,
-      subjectId,
-      scoreCategoryId,
-    };
+    const score = await findScoreById(id);
+    if (!score) return res.status(422).json({ message: "Score not found" });
 
     try {
-      const score = await deleteScore(dataScore);
+      const score = await deleteScore(id);
       res.json({ message: "Score successfully deleted" });
     } catch (error) {
       next(error);

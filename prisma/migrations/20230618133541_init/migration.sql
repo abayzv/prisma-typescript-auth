@@ -82,6 +82,7 @@ CREATE TABLE "ScoreCategory" (
 
 -- CreateTable
 CREATE TABLE "Score" (
+    "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "subjectId" TEXT NOT NULL,
     "score" INTEGER NOT NULL,
@@ -89,7 +90,7 @@ CREATE TABLE "Score" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Score_pkey" PRIMARY KEY ("userId","subjectId")
+    CONSTRAINT "Score_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable

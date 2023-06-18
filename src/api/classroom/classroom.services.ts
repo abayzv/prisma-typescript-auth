@@ -92,6 +92,7 @@ const getClassroomsById = async (id: string) => {
           },
           score: {
             select: {
+              id: true,
               score: true,
               subject: {
                 select: {

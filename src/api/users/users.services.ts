@@ -105,6 +105,7 @@ function viewUserDetails(id: string) {
       },
       score: {
         select: {
+          id: true,
           score: true,
           subject: {
             select: {

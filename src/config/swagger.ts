@@ -235,129 +235,6 @@ export const swaggerConfig = {
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "530",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"212-FtmEuPxcc8xR4uq+cJHKvw+xAks"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Tue, 06 Jun 2023 13:16:23 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -436,6 +313,11 @@ export const swaggerConfig = {
       get: {
         tags: ["Role"],
         summary: "Role Details",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -599,132 +481,14 @@ export const swaggerConfig = {
       get: {
         tags: ["Permission"],
         summary: "View All Permissions",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "440",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"1b8-7y6IRpzIKV/ZMVH17KDkD4ULqyk"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Tue, 06 Jun 2023 13:14:38 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -780,6 +544,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",
@@ -790,7 +559,7 @@ export const swaggerConfig = {
         },
       },
     },
-    "/api/v1/permissions/5": {
+    "/api/v1/permissions/{id}": {
       put: {
         tags: ["Permission"],
         summary: "Update Permission",
@@ -808,6 +577,21 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            schema: {
+              type: "string",
+            },
+            required: true,
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",
@@ -820,6 +604,21 @@ export const swaggerConfig = {
       delete: {
         tags: ["Permission"],
         summary: "Delete Permission",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            schema: {
+              type: "string",
+            },
+            required: true,
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",
@@ -834,132 +633,14 @@ export const swaggerConfig = {
       get: {
         tags: ["User"],
         summary: "View All Users",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "1174",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"496-EWGxgmbzmgBsGNltSHzfHs006Fw"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Mon, 05 Jun 2023 17:03:37 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -1067,132 +748,14 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "38",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"26-fFNOqhIOVDss9Ior8d4xJiKqCds"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Fri, 09 Jun 2023 02:12:50 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -1229,129 +792,6 @@ export const swaggerConfig = {
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "231",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"e7-JsFbXnzPgJpS3Mq+BgcLGLrMR+w"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Mon, 05 Jun 2023 17:01:33 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -1400,6 +840,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -1423,6 +868,11 @@ export const swaggerConfig = {
       delete: {
         tags: ["User"],
         summary: "Delete User",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -1459,6 +909,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -1473,129 +928,6 @@ export const swaggerConfig = {
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "38",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"26-ANBBL0hlcfMwfGfgLvI1e5CaHQk"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Mon, 05 Jun 2023 17:01:49 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -1614,132 +946,14 @@ export const swaggerConfig = {
       get: {
         tags: ["Payments"],
         summary: "View All Payments",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "388",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"184-qFys6m6TPVhGu5T+KY89uDilMAg"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:52:21 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -1789,6 +1003,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",
@@ -1803,6 +1022,11 @@ export const swaggerConfig = {
       get: {
         tags: ["Payments"],
         summary: "View Payment Details",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -1839,6 +1063,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -1862,6 +1091,11 @@ export const swaggerConfig = {
       delete: {
         tags: ["Payments"],
         summary: "Delete Payment",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -1886,132 +1120,14 @@ export const swaggerConfig = {
       get: {
         tags: ["Transaction"],
         summary: "View All Transaction",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "515",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"203-VkpwHPYxkRBxhinrPuxAE3Oc2Lw"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:52:36 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -2053,6 +1169,11 @@ export const swaggerConfig = {
       get: {
         tags: ["Transaction"],
         summary: "View Transaction Details",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -2075,6 +1196,11 @@ export const swaggerConfig = {
       delete: {
         tags: ["Transaction"],
         summary: "Delete Transaction",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -2118,132 +1244,14 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "1033",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"409-mEGyz06jR1qKA0WXah1tYvcDLaU"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Fri, 09 Jun 2023 14:22:05 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -2294,6 +1302,11 @@ export const swaggerConfig = {
       get: {
         tags: ["Transaction"],
         summary: "Get Status",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -2307,129 +1320,6 @@ export const swaggerConfig = {
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "673",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"2a1-S3b0Wpd0n+KJxanpzGIt84B6i/U"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Fri, 09 Jun 2023 16:53:01 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -2469,6 +1359,11 @@ export const swaggerConfig = {
         requestBody: {
           content: {},
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -2482,129 +1377,6 @@ export const swaggerConfig = {
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "396",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"18c-1Al3skb5+pqKo5U4udEcnjAEAiM"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Fri, 09 Jun 2023 14:12:37 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -2650,6 +1422,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",
@@ -2664,6 +1441,11 @@ export const swaggerConfig = {
       get: {
         tags: ["Transaction"],
         summary: "Get QR Code (Qris or GOPAY only)",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -2688,132 +1470,14 @@ export const swaggerConfig = {
       get: {
         tags: ["Logs"],
         summary: "Get All Logs",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "2253",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"8cd-7yfmtoKbQ3u8z4b2JS4P5lUttJQ"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:52:45 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -2915,132 +1579,14 @@ export const swaggerConfig = {
       get: {
         tags: ["Classroom"],
         summary: "View All Classroom",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "348",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"15c-brqy4NOqy4Zk3FCCWh7IiXvt5Wc"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:53:01 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -3087,6 +1633,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",
@@ -3101,6 +1652,11 @@ export const swaggerConfig = {
       get: {
         tags: ["Classroom"],
         summary: "View CLassroom Details",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -3136,6 +1692,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -3159,6 +1720,11 @@ export const swaggerConfig = {
       delete: {
         tags: ["Classroom"],
         summary: "Delete Classroom",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -3195,6 +1761,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -3219,132 +1790,14 @@ export const swaggerConfig = {
       get: {
         tags: ["List"],
         summary: "Teacher",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "153",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"99-cL9+ac436kTJWhDwJ9FnP7cg6QA"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:51:32 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -3372,132 +1825,14 @@ export const swaggerConfig = {
       get: {
         tags: ["List"],
         summary: "Clasroom",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "148",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"94-CQ7kTw9suD1rlDM/hjGt1HfJ2Cw"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:51:23 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -3525,132 +1860,14 @@ export const swaggerConfig = {
       get: {
         tags: ["List"],
         summary: "Permission",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "144",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"90-R3V9UcmTuQgOZuaFHIWqDlkHZCw"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:51:15 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -3686,132 +1903,14 @@ export const swaggerConfig = {
       get: {
         tags: ["List"],
         summary: "Role",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "160",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"a0-pOIBVy6u24zfXx7gJgfvowxJbsw"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:51:07 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -3851,132 +1950,14 @@ export const swaggerConfig = {
       get: {
         tags: ["List"],
         summary: "Subject",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "286",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"11e-Cp3uOTdtCV2wNorCi0+l2YWoG0Y"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:51:03 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -4012,132 +1993,14 @@ export const swaggerConfig = {
       get: {
         tags: ["List"],
         summary: "Score Category",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "167",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"a7-UVqKrmAR66wdQNhWDAzv3v3oRb0"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:50:52 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -4165,132 +2028,14 @@ export const swaggerConfig = {
       get: {
         tags: ["Subject"],
         summary: "View All Subject",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "389",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"185-XYECRR1NtUqX8ijtoFz8Bosu6kE"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:53:09 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -4347,6 +2092,11 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "Successful response",
@@ -4361,6 +2111,11 @@ export const swaggerConfig = {
       get: {
         tags: ["Subject"],
         summary: "View Subject Details",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -4386,6 +2141,11 @@ export const swaggerConfig = {
         requestBody: {
           content: {},
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -4408,6 +2168,11 @@ export const swaggerConfig = {
       delete: {
         tags: ["Subject"],
         summary: "Delete Subject",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -4446,132 +2211,14 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "32",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"20-/qeYH99m5oBEldc+hGUWa7GGFYo"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 09:17:30 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -4605,132 +2252,14 @@ export const swaggerConfig = {
             },
           },
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "46",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"2e-vM8Mn8ljIS7ZMRW5ZBcp73I83Zs"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 09:37:22 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -4747,14 +2276,38 @@ export const swaggerConfig = {
           },
         },
       },
+    },
+    "/api/v1/scores/{id}": {
       delete: {
         tags: ["Score"],
         summary: "Delete Score",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            schema: {
+              type: "string",
+            },
+            required: true,
+          },
+        ],
         responses: {
           "200": {
-            description: "Successful response",
+            description: "OK",
             content: {
-              "application/json": {},
+              "application/json": {
+                schema: {
+                  type: "object",
+                },
+                example: {
+                  message: "Score successfully deleted",
+                },
+              },
             },
           },
         },
@@ -4764,132 +2317,14 @@ export const swaggerConfig = {
       get: {
         tags: ["Score Category"],
         summary: "View All Score Categories",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "264",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"108-btIxayYprSSLMyVV2bP5ngJHhs4"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 11:48:22 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -4922,132 +2357,14 @@ export const swaggerConfig = {
         requestBody: {
           content: {},
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "206",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"ce-QEHEz0Xgss+4bXxxy1iv/72WypQ"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 12:00:48 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -5075,6 +2392,11 @@ export const swaggerConfig = {
         requestBody: {
           content: {},
         },
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",
@@ -5088,129 +2410,6 @@ export const swaggerConfig = {
         responses: {
           "200": {
             description: "OK",
-            headers: {
-              "Content-Security-Policy": {
-                schema: {
-                  type: "string",
-                  example:
-                    "default-src 'self';base-uri 'self';font-src 'self' https: data:;form-action 'self';frame-ancestors 'self';img-src 'self' data:;object-src 'none';script-src 'self';script-src-attr 'none';style-src 'self' https: 'unsafe-inline';upgrade-insecure-requests",
-                },
-              },
-              "Cross-Origin-Embedder-Policy": {
-                schema: {
-                  type: "string",
-                  example: "require-corp",
-                },
-              },
-              "Cross-Origin-Opener-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "Cross-Origin-Resource-Policy": {
-                schema: {
-                  type: "string",
-                  example: "same-origin",
-                },
-              },
-              "X-DNS-Prefetch-Control": {
-                schema: {
-                  type: "string",
-                  example: "off",
-                },
-              },
-              "X-Frame-Options": {
-                schema: {
-                  type: "string",
-                  example: "SAMEORIGIN",
-                },
-              },
-              "Strict-Transport-Security": {
-                schema: {
-                  type: "string",
-                  example: "max-age=15552000; includeSubDomains",
-                },
-              },
-              "X-Download-Options": {
-                schema: {
-                  type: "string",
-                  example: "noopen",
-                },
-              },
-              "X-Content-Type-Options": {
-                schema: {
-                  type: "string",
-                  example: "nosniff",
-                },
-              },
-              "Origin-Agent-Cluster": {
-                schema: {
-                  type: "string",
-                  example: "?1",
-                },
-              },
-              "X-Permitted-Cross-Domain-Policies": {
-                schema: {
-                  type: "string",
-                  example: "none",
-                },
-              },
-              "Referrer-Policy": {
-                schema: {
-                  type: "string",
-                  example: "no-referrer",
-                },
-              },
-              "X-XSS-Protection": {
-                schema: {
-                  type: "integer",
-                  example: "0",
-                },
-              },
-              "Access-Control-Allow-Origin": {
-                schema: {
-                  type: "string",
-                  example: "*",
-                },
-              },
-              "Content-Type": {
-                schema: {
-                  type: "string",
-                  example: "application/json; charset=utf-8",
-                },
-              },
-              "Content-Length": {
-                schema: {
-                  type: "integer",
-                  example: "209",
-                },
-              },
-              ETag: {
-                schema: {
-                  type: "string",
-                  example: 'W/"d1-H+XO+PVcXsqzdjdsKsN3dd/wIsg"',
-                },
-              },
-              Date: {
-                schema: {
-                  type: "string",
-                  example: "Sun, 18 Jun 2023 12:05:42 GMT",
-                },
-              },
-              Connection: {
-                schema: {
-                  type: "string",
-                  example: "keep-alive",
-                },
-              },
-              "Keep-Alive": {
-                schema: {
-                  type: "string",
-                  example: "timeout=5",
-                },
-              },
-            },
             content: {
               "application/json": {
                 schema: {
@@ -5233,6 +2432,11 @@ export const swaggerConfig = {
       delete: {
         tags: ["Score Category"],
         summary: "Delete Score Category",
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         parameters: [
           {
             name: "id",

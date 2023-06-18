@@ -99,6 +99,7 @@ router.get(
             acc[key] = [];
           }
           acc[key].push({
+            id: item.id,
             score: item.score,
             subject: item.subject.name,
           });

@@ -85,6 +85,7 @@ model ScoreCategory {
 }
 
 model Score {
+  id        String   @id @default(uuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   subjectId String
@@ -94,8 +95,6 @@ model Score {
   category  ScoreCategory @relation(fields: [categoryId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@id([userId, subjectId, categoryId])
 }
 
 model Subject {
