@@ -7,7 +7,8 @@
     "start": "node src/index.js",
     "dev": "npx nodemon src/index.ts",
     "lint": "eslint --fix src",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

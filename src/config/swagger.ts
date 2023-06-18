@@ -6,7 +6,10 @@ export const swaggerConfig = {
   },
   servers: [
     {
-      url: "http://localhost:5000",
+      url:
+        process.env.NODE_ENV === "production"
+          ? process.env.APP_URL
+          : "http://localhost:5000",
     },
   ],
   components: {
