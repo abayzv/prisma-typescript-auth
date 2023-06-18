@@ -95,7 +95,7 @@ model Score {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@id([userId, subjectId])
+  @@id([userId, subjectId, categoryId])
 }
 
 model Subject {

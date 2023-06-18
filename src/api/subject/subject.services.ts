@@ -162,6 +162,18 @@ const deleteSubject = async (id: string) => {
   return subject;
 };
 
+const findSubjectByManyId = async (ids: Array<string>) => {
+  const data = await db.subject.findMany({
+    where: {
+      id: {
+        in: ids,
+      },
+    },
+  });
+
+  return data;
+};
+
 export {
   getAllSubject,
   findSubjectById,
@@ -170,4 +182,5 @@ export {
   findSubjectByName,
   deleteSubject,
   updateSubject,
+  findSubjectByManyId,
 };

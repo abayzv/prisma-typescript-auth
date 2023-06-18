@@ -37,8 +37,42 @@ const createScoreList = async (data: {
 
   const scoreData = await db.score.createMany({
     data: scoreList,
-    skipDuplicates: true,
+    // skipDuplicates: true,
   });
+
+  return scoreData;
 };
 
-export { createScoreList };
+const updateScore = async (data: {
+  userId: string;
+  subjectId: Array<string>;
+  scoreCategoryId: string;
+  score: number;
+}) => {
+  const score = await db.score.updateMany({
+    where: {
+      userId: data.userId,
+      subjectId: {
+        in: data.subjectId,
+      },
+      categoryId: data.scoreCategoryId,
+    },
+    data: {
+      score: data.score,
+    },
+  });
+
+  return score;
+};
+
+const findScoreCategoryById = async (id: string) => {
+  const data = await db.scoreCategory.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  return data;
+};
+
+export { createScoreList, updateScore, findScoreCategoryById };

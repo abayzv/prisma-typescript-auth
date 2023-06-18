@@ -270,38 +270,14 @@ router.get(
           if (!acc[key]) {
             acc[key] = [];
           }
-          acc[key].push(item);
+          acc[key].push({
+            score: item.score,
+            subject: item.subject.name,
+          });
           return acc;
         }, {});
 
-        // map groupByCategory to array
-        const mapGroupByCategory = Object.keys(groupByCategory).map(
-          (key: any) => {
-            return {
-              category: key,
-              items: groupByCategory[key],
-            };
-          }
-        );
-
-        // map mapGroupByCategory to array
-        const mapMapGroupByCategory = mapGroupByCategory.map(
-          (category: any) => {
-            let data: any = [];
-            category.items.forEach((item: any) => {
-              data.push({
-                score: item.score,
-                subjectName: item.subject.name,
-              });
-            });
-            return {
-              category: category.category,
-              data,
-            };
-          }
-        );
-
-        return mapMapGroupByCategory;
+        return groupByCategory;
       };
 
       switch (user.roleID) {
