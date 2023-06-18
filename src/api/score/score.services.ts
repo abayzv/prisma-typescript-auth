@@ -65,14 +65,22 @@ const updateScore = async (data: {
   return score;
 };
 
-const findScoreCategoryById = async (id: string) => {
-  const data = await db.scoreCategory.findUnique({
+const deleteScore = async (data: {
+  userId: string;
+  subjectId: Array<string>;
+  scoreCategoryId: string;
+}) => {
+  const score = await db.score.deleteMany({
     where: {
-      id: id,
+      userId: data.userId,
+      subjectId: {
+        in: data.subjectId,
+      },
+      categoryId: data.scoreCategoryId,
     },
   });
 
-  return data;
+  return score;
 };
 
-export { createScoreList, updateScore, findScoreCategoryById };
+export { createScoreList, updateScore, deleteScore };

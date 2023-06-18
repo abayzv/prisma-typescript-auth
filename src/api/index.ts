@@ -17,6 +17,7 @@ import classroom from "./classroom/classroom.routes";
 import list from "./list/list.routes";
 import subject from "./subject/subject.routes";
 import score from "./score/score.routes";
+import scoreCategory from "./scoreCategory/scoreCategory.routes";
 
 const router = express.Router();
 
@@ -31,6 +32,7 @@ router.use("/classrooms", classroom);
 router.use("/list", list);
 router.use("/subjects", subject);
 router.use("/scores", score);
+router.use("/score-categories", scoreCategory);
 
 // Swagger setup
 

@@ -4,6 +4,8 @@ import {
   getClassroomList,
   getPermissionList,
   getRoleList,
+  getSubjectList,
+  getScoreCategoryList,
 } from "./list.services";
 
 const router = express.Router();
@@ -71,6 +73,42 @@ router.get("/roles", async (req: any, res: any, next: any) => {
       return {
         value: role.id,
         label: role.name,
+      };
+    });
+
+    res.json({ data });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get all subjects
+router.get("/subjects", async (req: any, res: any, next: any) => {
+  try {
+    const subjects = await getSubjectList();
+
+    const data = subjects.map((subject: any) => {
+      return {
+        value: subject.id,
+        label: subject.name,
+      };
+    });
+
+    res.json({ data });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Get all score categories
+router.get("/score-categories", async (req: any, res: any, next: any) => {
+  try {
+    const scoreCategories = await getScoreCategoryList();
+
+    const data = scoreCategories.map((scoreCategory: any) => {
+      return {
+        value: scoreCategory.id,
+        label: scoreCategory.name,
       };
     });
 

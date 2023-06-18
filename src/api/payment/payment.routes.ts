@@ -102,7 +102,7 @@ router.get(
       };
 
       const payments = await getAllPayment(query);
-      res.json({ data: payments });
+      res.json(payments);
     } catch (err) {
       next(err);
     }

@@ -62,4 +62,33 @@ const getRoleList = async () => {
   return data;
 };
 
-export { getTeacherList, getClassroomList, getPermissionList, getRoleList };
+const getSubjectList = async () => {
+  const data = await db.subject.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  return data;
+};
+
+const getScoreCategoryList = async () => {
+  const data = await db.scoreCategory.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  return data;
+};
+
+export {
+  getTeacherList,
+  getClassroomList,
+  getPermissionList,
+  getRoleList,
+  getSubjectList,
+  getScoreCategoryList,
+};
