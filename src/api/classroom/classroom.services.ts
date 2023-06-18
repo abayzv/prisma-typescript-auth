@@ -90,6 +90,21 @@ const getClassroomsById = async (id: string) => {
               photo: true,
             },
           },
+          score: {
+            select: {
+              score: true,
+              subject: {
+                select: {
+                  name: true,
+                },
+              },
+              category: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
         },
       },
     },

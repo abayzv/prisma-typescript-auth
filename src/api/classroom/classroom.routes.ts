@@ -91,12 +91,30 @@ router.get(
       if (!classroom)
         return res.status(404).json({ message: "Classroom not found" });
 
+      const mapCategoryScore = (data: Array<any>) => {
+        // group data by item.category.name in data
+        const groupByCategory = data.reduce((acc: any, item: any) => {
+          const key = item.category.name;
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push({
+            score: item.score,
+            subject: item.subject.name,
+          });
+          return acc;
+        }, {});
+
+        return groupByCategory;
+      };
+
       const studentList = (data: Array<any>) => {
         return data.map((student) => {
           return {
             id: student.id,
             name: student.profile.name,
             photo: student.profile.photo,
+            score: mapCategoryScore(student.score),
           };
         });
       };
