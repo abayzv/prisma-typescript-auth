@@ -1,5 +1,5 @@
 // @ts-ignore
-import core from "../../config/midtrans.js";
+import core from "../../config/midtrans";
 import axios from "axios";
 import fetch from "node-fetch";
 import { db } from "../../utils/db";
@@ -71,7 +71,6 @@ const getAllTransaction = async (query: {
       updatedAt: true,
     },
   });
-  console.log(transactions);
 
   const count = await db.transaction.count({
     where: {
