@@ -111,6 +111,11 @@ function viewUserDetails(id: string) {
               name: true,
             },
           },
+          category: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
       teacherClass: {

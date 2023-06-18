@@ -263,6 +263,47 @@ router.get(
         });
       });
 
+      const mapCategoryScore = (data: Array<any>) => {
+        // group data by item.category.name in data
+        const groupByCategory = data.reduce((acc: any, item: any) => {
+          const key = item.category.name;
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push(item);
+          return acc;
+        }, {});
+
+        // map groupByCategory to array
+        const mapGroupByCategory = Object.keys(groupByCategory).map(
+          (key: any) => {
+            return {
+              category: key,
+              items: groupByCategory[key],
+            };
+          }
+        );
+
+        // map mapGroupByCategory to array
+        const mapMapGroupByCategory = mapGroupByCategory.map(
+          (category: any) => {
+            let data: any = [];
+            category.items.forEach((item: any) => {
+              data.push({
+                score: item.score,
+                subjectName: item.subject.name,
+              });
+            });
+            return {
+              category: category.category,
+              data,
+            };
+          }
+        );
+
+        return mapMapGroupByCategory;
+      };
+
       switch (user.roleID) {
         case 1:
           userResponse["email"] = user.email;
@@ -295,7 +336,7 @@ router.get(
           userResponse["profile"] = user.profile;
           userResponse["parent"] = user.parent;
           userResponse["class"] = user.class;
-          userResponse["score"] = user.score;
+          userResponse["score"] = mapCategoryScore(user.score);
           userResponse["transaction"] = userTransaction;
           userResponse["createdAt"] = user.createdAt;
           userResponse["updatedAt"] = user.updatedAt;

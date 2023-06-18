@@ -81,7 +81,17 @@ const getClassroomsById = async (id: string) => {
           },
         },
       },
-      student: true,
+      student: {
+        select: {
+          id: true,
+          profile: {
+            select: {
+              name: true,
+              photo: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -156,6 +166,27 @@ const deleteClassroom = async (id: string) => {
       id: id,
     },
   });
+
+  return classroom;
+};
+
+const assignStudent = async (id: string, data: Array<string>) => {
+  const classroom = await db.class.update({
+    where: {
+      id: id,
+    },
+    data: {
+      student: {
+        connect: data.map((studentId) => {
+          return {
+            id: studentId,
+          };
+        }),
+      },
+    },
+  });
+
+  return classroom;
 };
 
 export {
@@ -167,4 +198,5 @@ export {
   findTeacherById,
   findClassRoomByName,
   deleteClassroom,
+  assignStudent,
 };

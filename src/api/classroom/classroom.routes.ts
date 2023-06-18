@@ -8,8 +8,9 @@ import {
   findTeacherById,
   deleteClassroom,
   findClassRoomByName,
+  assignStudent,
 } from "./classroom.services";
-import { isPermited, isAuthenticated } from "../../middlewares";
+import { isPermited, isAuthenticated, activityLogger } from "../../middlewares";
 import { checkSchema, validationResult, matchedData } from "express-validator";
 
 const router = express.Router();
@@ -90,12 +91,22 @@ router.get(
       if (!classroom)
         return res.status(404).json({ message: "Classroom not found" });
 
+      const studentList = (data: Array<any>) => {
+        return data.map((student) => {
+          return {
+            id: student.id,
+            name: student.profile.name,
+            photo: student.profile.photo,
+          };
+        });
+      };
+
       const classroomData = {
         id: classroom.id,
         name: classroom.name,
         teacherId: classroom.teacherId,
         teacherName: classroom.teacher?.profile?.name,
-        student: classroom.student,
+        student: studentList(classroom.student),
       };
 
       res.json({ data: classroomData });
@@ -111,6 +122,7 @@ router.post(
   isAuthenticated,
   isPermited,
   checkSchema(createRules),
+  activityLogger("Create classroom", "Success Create Classroom"),
   async (req: any, res: any, next: any) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json(errors.array());
@@ -154,6 +166,7 @@ router.put(
   isAuthenticated,
   isPermited,
   checkSchema(updateRules),
+  activityLogger("Update classroom", "Success Update Classroom"),
   async (req: any, res: any, next: any) => {
     const id = req.params.id;
 
@@ -198,6 +211,7 @@ router.delete(
   "/:id",
   isAuthenticated,
   isPermited,
+  activityLogger("Delete classroom", "Success Delete Classroom"),
   async (req: any, res: any, next: any) => {
     const id = req.params.id;
 
@@ -209,6 +223,32 @@ router.delete(
       await deleteClassroom(id);
       res.json({
         message: "Classroom deleted successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+// Assign student to classroom
+router.post(
+  "/:id/assign",
+  isAuthenticated,
+  isPermited,
+  activityLogger("Assign student to classroom", "Success Assign Student"),
+  async (req: any, res: any, next: any) => {
+    const id = req.params.id;
+    const { studentId } = req.body;
+
+    const classroom = await getClassroomsById(id);
+    if (!classroom)
+      return res.status(404).json({ message: "Classroom not found" });
+
+    try {
+      const assign = await assignStudent(id, studentId);
+      res.json({
+        message: "Student assigned successfully",
+        data: assign,
       });
     } catch (error) {
       next(error);

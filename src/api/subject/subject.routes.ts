@@ -108,6 +108,7 @@ router.post(
   isAuthenticated,
   isPermited,
   checkSchema(createRules),
+  activityLogger("Create subject", "Success create subject"),
   async (req: any, res: any, next: any) => {
     const errors = validationResult(req);
 
@@ -140,6 +141,7 @@ router.put(
   isAuthenticated,
   isPermited,
   checkSchema(rules),
+  activityLogger("Update subject", "Success update subject"),
   async (req: any, res: any, next: any) => {
     const errors = validationResult(req);
 
@@ -176,6 +178,7 @@ router.delete(
   "/:id",
   isAuthenticated,
   isPermited,
+  activityLogger("Delete subject", "Success delete subject"),
   async (req: any, res: any, next: any) => {
     const { id } = req.params;
 
