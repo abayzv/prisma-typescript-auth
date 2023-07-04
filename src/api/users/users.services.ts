@@ -49,6 +49,9 @@ async function viewAllUsers(query: {
       createdAt: true,
       updatedAt: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 
   const count = await db.user.count({
@@ -70,8 +73,20 @@ async function viewAllUsers(query: {
     },
   });
 
+  const userData = data.map((user) => {
+    return {
+      id: user.id,
+      role: user.role.name,
+      email: user.email,
+      name: user?.profile?.name,
+      photo: user?.profile?.photo,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    };
+  });
+
   return {
-    data,
+    data: userData,
     totalPage: Math.ceil(count / paginate).toString(),
     page: query.page || "1",
   };
@@ -223,7 +238,7 @@ function findUserByEmail(email: string) {
   });
 }
 
-function findUserById(id: string): Promise<User | null> {
+function findUserById(id: string) {
   return db.user.findUnique({
     where: {
       id,
@@ -231,7 +246,18 @@ function findUserById(id: string): Promise<User | null> {
     select: {
       id: true,
       email: true,
+      profile: {
+        select: {
+          name: true,
+          photo: true,
+        },
+      },
       roleID: true,
+      role: {
+        select: {
+          name: true,
+        },
+      },
       createdAt: true,
     },
   });

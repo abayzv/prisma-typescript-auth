@@ -58,6 +58,8 @@ function errorHandler(err: any, req: any, res: any, next: any) {
 
 function activityLogger(action: string, description: string, useAuth = true) {
   return async function (req: any, res: any, next: any) {
+    // if (res.statusCode !== 200) return next();
+
     const ipAddress =
       req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
@@ -82,17 +84,19 @@ function activityLogger(action: string, description: string, useAuth = true) {
       return next();
     }
 
-    const { userId } = req.payload;
-    await db.activityLog.create({
-      data: {
-        action,
-        description,
-        // @ts-ignore
-        ipAddress,
-        // @ts-ignore
-        userId: userId,
-      },
-    });
+    // if (res.statusCode === 200) {
+    //   const { userId } = req.payload;
+    //   await db.activityLog.create({
+    //     data: {
+    //       action,
+    //       description,
+    //       // @ts-ignore
+    //       ipAddress,
+    //       // @ts-ignore
+    //       userId: userId,
+    //     },
+    //   });
+    // }
 
     next();
   };

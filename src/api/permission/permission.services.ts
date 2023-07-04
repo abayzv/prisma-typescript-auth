@@ -21,8 +21,8 @@ const viewAllPermissions = async (query: {
     select: {
       id: true,
       name: true,
-      // action: true,
-      // menu: true,
+      action: true,
+      menu: true,
       createdAt: true,
       updatedAt: true,
     },
@@ -37,8 +37,19 @@ const viewAllPermissions = async (query: {
     },
   });
 
+  const permissionData = permission.map((item) => {
+    return {
+      id: item.id,
+      name: item.name,
+      method: item.action,
+      menu: item.menu,
+      createdAt: item.createdAt,
+      updatedAt: item.updatedAt,
+    };
+  });
+
   return {
-    data: permission,
+    data: permissionData,
     totalPage: Math.ceil(count / paginate).toString(),
     page: query.page || "1",
   };

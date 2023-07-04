@@ -18,6 +18,7 @@ import list from "./list/list.routes";
 import subject from "./subject/subject.routes";
 import score from "./score/score.routes";
 import scoreCategory from "./scoreCategory/scoreCategory.routes";
+import tiktok from "./tiktok/tiktok.routes";
 
 const router = express.Router();
 
@@ -33,6 +34,7 @@ router.use("/list", list);
 router.use("/subjects", subject);
 router.use("/scores", score);
 router.use("/score-categories", scoreCategory);
+router.use("/tiktok", tiktok);
 
 // Swagger setup
 

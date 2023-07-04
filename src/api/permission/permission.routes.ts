@@ -154,7 +154,7 @@ router.put(
 
     //   check if permission already exist
     const isExist = await findPermissionByName(name);
-    if (name && isExist)
+    if (isExist?.id !== id)
       return res.status(400).json({ message: "Permission already exist" });
 
     //  update permission

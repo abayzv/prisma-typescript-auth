@@ -17,7 +17,7 @@ import { findRoleById } from "../role/role.services";
 const router = express.Router();
 
 const changeUserRoleRules = {
-  roleID: {
+  roleId: {
     notEmpty: {
       errorMessage: "Role is required",
     },
@@ -139,6 +139,7 @@ const createUserRules = {
     },
   },
   birthDate: {
+    optional: true,
     isLength: {
       options: { min: 3 },
       errorMessage: "Birth Date must be at least 3 characters long",
@@ -148,18 +149,21 @@ const createUserRules = {
     },
   },
   address: {
+    optional: true,
     isLength: {
       options: { min: 3 },
       errorMessage: "Address must be at least 3 characters long",
     },
   },
   gender: {
+    optional: true,
     isLength: {
       options: { min: 3 },
       errorMessage: "Gender must be at least 3 characters long",
     },
   },
   religion: {
+    optional: true,
     isLength: {
       options: { min: 3 },
       errorMessage: "Religion must be at least 3 characters long",
@@ -180,11 +184,9 @@ const createUserRules = {
       options: async (value: any) => {
         // must be integer and must be one of the roles
         if (!value) return Promise.reject("Role ID is required");
-        if (!Number.isInteger(value)) {
-          return Promise.reject("Role ID must be an integer");
-        }
+
         // check if role exists
-        const role = await findRoleById(value);
+        const role = await findRoleById(+value);
         if (!role) {
           return Promise.reject("Role ID does not exist");
         }
@@ -227,7 +229,19 @@ router.get("/me", isAuthenticated, async (req: any, res: any, next: any) => {
     const { userId } = req.payload;
     const user = await findUserById(userId);
 
-    res.json(user);
+    if (!user) return res.status(400).json({ message: "User not found" });
+
+    const userData = {
+      id: user.id,
+      name: user?.profile?.name,
+      avatar: user?.profile?.photo,
+      email: user.email,
+      roleId: user.roleID,
+      roleName: user.role.name,
+      createdAt: user.createdAt,
+    };
+
+    res.json(userData);
   } catch (err) {
     next(err);
   }
@@ -342,7 +356,7 @@ router.post(
     const userData = {
       email: data.email,
       password: data.password,
-      roleID: data.roleId,
+      roleID: +data.roleId,
       name: data.name,
       address: data.address,
       birthDate: new Date(data.birthDate),
@@ -369,7 +383,7 @@ router.put(
   async (req: any, res: any, next: any) => {
     try {
       const id = req.params.id;
-      const { roleID } = matchedData(req);
+      const { roleId } = matchedData(req);
 
       const errors = validationResult(req);
 
@@ -380,7 +394,7 @@ router.put(
       if (!user) return res.status(400).json({ message: "User not found" });
 
       // change user role
-      const role = await changeUserRole(id, roleID);
+      const role = await changeUserRole(id, +roleId);
       res.json({ message: "Role Changed Succesfully" });
     } catch (error) {
       next(error);
@@ -440,7 +454,7 @@ router.put(
 router.delete(
   "/:id",
   isAuthenticated,
-  activityLogger("Delete User", "Successfully delete a use"),
+  activityLogger("Delete User", "Successfully delete a user"),
   isPermited,
   async (req: any, res: any, next: any) => {
     try {

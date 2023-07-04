@@ -46,6 +46,7 @@ const getAllLog = async (query: {
     },
     select: {
       id: true,
+      ipAddress: true,
       action: true,
       userId: true,
       user: {
@@ -59,6 +60,9 @@ const getAllLog = async (query: {
       },
       description: true,
       createdAt: true,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
   const count = await db.activityLog.count({
@@ -85,7 +89,8 @@ const getAllLog = async (query: {
   const logData = data.map((log) => {
     return {
       id: log.id,
-      action: log.action,
+      ipAddress: log.ipAddress,
+      actionName: log.action,
       userId: log.userId,
       userName: log.user?.profile?.name,
       description: log.description,
