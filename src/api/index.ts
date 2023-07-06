@@ -18,23 +18,23 @@ import list from "./list/list.routes";
 import subject from "./subject/subject.routes";
 import score from "./score/score.routes";
 import scoreCategory from "./scoreCategory/scoreCategory.routes";
-import tiktok from "./tiktok/tiktok.routes";
+import quran from "./quran/quran.routes";
 
 const router = express.Router();
 
 router.use("/auth", auth);
 router.use("/users", users);
-router.use("/roles", role);
-router.use("/permissions", permission);
-router.use("/transactions", transaction);
-router.use("/payments", payment);
-router.use("/logs", log);
-router.use("/classrooms", classroom);
-router.use("/list", list);
-router.use("/subjects", subject);
-router.use("/scores", score);
-router.use("/score-categories", scoreCategory);
-router.use("/tiktok", tiktok);
+// router.use("/roles", role);
+// router.use("/permissions", permission);
+// router.use("/transactions", transaction);
+// router.use("/payments", payment);
+// router.use("/logs", log);
+// router.use("/classrooms", classroom);
+// router.use("/list", list);
+// router.use("/subjects", subject);
+// router.use("/scores", score);
+// router.use("/score-categories", scoreCategory);
+router.use("/quran", quran);
 
 // Swagger setup
 
